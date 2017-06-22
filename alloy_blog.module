@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Contains alloy_blog.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function alloy_blog_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the alloy_blog module.
+    case 'help.page.alloy_blog':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Coming Soon') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+function alloy_blog_theme($existing, $type, $theme, $path) {
+  $theme = [];
+  $theme['blog'] = [
+    'render element' => 'elements',
+    'file' => 'blog.page.inc',
+    'template' => 'blog',
+  ];
+  return $theme;
+}
+
+function alloy_blog_install() {
+  // Enable pathauto for blog entities
+  $config = \Drupal::service('config.factory')->getEditable('pathauto.settings');
+  $enabled_pathauto_types = $config->get('enabled_entity_types');
+  $enabled_pathauto_types[] = 'blog';
+  $config->set('enabled_entity_types', $enabled_pathauto_types)->save();
+}

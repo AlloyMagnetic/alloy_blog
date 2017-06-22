@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - alloy_blog
+id: blog
+label: Blog
+type: 'canonical_entities:blog'
+pattern: '/blog/[blog:title]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }

@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - alloy_blog
+    - text
+id: blog.blog.default
+targetEntityType: blog
+bundle: blog
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    label: hidden
+    type: string
+    weight: 0
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  title:
+    label: hidden
+    type: string
+    weight: -4
+    region: content
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  url_alias: true
+  user_id: true

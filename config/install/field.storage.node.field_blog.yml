@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - alloy_blog
+    - node
+_core:
+  default_config_hash: 1GF4NPEpAh_DEa_STRX5WBYc4xzsxiZhTmULwuKY1Dk
+id: node.field_blog
+field_name: field_blog
+entity_type: node
+type: entity_reference
+settings:
+  target_type: blog
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

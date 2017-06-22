@@ -1,0 +1,7 @@
+name: Alloy Blog
+type: module
+description: Defines base blog entities
+core: 8.x
+package: Alloy
+dependencies:
+  - pathauto

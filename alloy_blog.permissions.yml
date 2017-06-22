@@ -1,0 +1,33 @@
+add blog entities:
+  title: 'Create new Blog entities'
+
+administer blog entities:
+  title: 'Administer Blog entities'
+  description: 'Allow to access the administration form to configure Blog entities.'
+  restrict access: true
+
+delete blog entities:
+  title: 'Delete Blog entities'
+
+edit blog entities:
+  title: 'Edit Blog entities'
+
+access blog overview:
+  title: 'Access the Blog overview page'
+
+view published blog entities:
+  title: 'View published Blog entities'
+
+view unpublished blog entities:
+  title: 'View unpublished Blog entities'
+
+view all blog revisions:
+  title: 'View all Blog revisions'
+
+revert all blog revisions:
+  title: 'Revert all Blog revisions'
+  description: 'Role requires permission <em>view Blog revisions</em> and <em>edit rights</em> for blog entities in question or <em>administer blog entities</em>.'
+
+delete all blog revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Blog revisions</em> and <em>delete rights</em> for blog entities in question or <em>administer blog entities</em>.'
