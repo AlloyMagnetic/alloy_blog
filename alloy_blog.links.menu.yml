@@ -1,7 +1,7 @@
 
 # Blog menu items definition
 entity.blog.collection:
-  title: 'Blog list'
+  title: 'Blogs'
   route_name: entity.blog.collection
   description: 'List Blog entities'
   parent: system.admin_structure
