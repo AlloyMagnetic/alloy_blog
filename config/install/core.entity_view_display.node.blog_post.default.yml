@@ -5,8 +5,10 @@ dependencies:
     - field.field.node.blog_post.body
     - field.field.node.blog_post.field_blog
     - field.field.node.blog_post.field_blog_post_image
+    - field.field.node.blog_post.field_bottom_ctas
     - field.field.node.blog_post.field_categories
     - field.field.node.blog_post.field_related_posts
+    - field.field.node.blog_post.field_sidebar_ctas
     - field.field.node.blog_post.field_topics
     - image.style.large
     - node.type.blog_post
@@ -46,6 +48,15 @@ content:
         fences_label_classes: ''
     type: image
     region: content
+  field_bottom_ctas:
+    weight: 7
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
   field_categories:
     weight: 1
     label: hidden
@@ -64,6 +75,15 @@ content:
     region: content
   field_related_posts:
     weight: 5
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+  field_sidebar_ctas:
+    weight: 6
     label: hidden
     settings:
       view_mode: default

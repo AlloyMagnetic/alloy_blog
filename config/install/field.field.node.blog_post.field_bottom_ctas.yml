@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - assembly.assembly_type.hubspot_cta_embed
+    - field.storage.node.field_bottom_ctas
+    - node.type.blog_post
+  module:
+    - entity_reference_revisions
+id: node.blog_post.field_bottom_ctas
+field_name: field_bottom_ctas
+entity_type: node
+bundle: blog_post
+label: 'Bottom CTAs'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:assembly'
+  handler_settings:
+    target_bundles:
+      hubspot_cta_embed: hubspot_cta_embed
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference_revisions
