@@ -6,15 +6,17 @@ dependencies:
     - field.field.node.blog_post.field_blog
     - field.field.node.blog_post.field_blog_post_image
     - field.field.node.blog_post.field_categories
+    - field.field.node.blog_post.field_related_posts
     - field.field.node.blog_post.field_topics
     - image.style.thumbnail
     - node.type.blog_post
   module:
+    - entity_reference_revisions
     - image
     - path
     - text
 _core:
-  default_config_hash: zyc0jiyDhHke-5akaThktirZN7Un99gKvcrUvJVB6X4
+  default_config_hash: MjvWv5sqwn2p34Za6DOp8bNy4NS25BRS7B90xuhfIvw
 id: node.blog_post.default
 targetEntityType: node
 bundle: blog_post
@@ -60,6 +62,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
+  field_related_posts:
+    weight: 26
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_autocomplete
     region: content
   field_tags:
     weight: 9

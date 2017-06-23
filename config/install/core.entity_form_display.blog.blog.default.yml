@@ -4,6 +4,8 @@ dependencies:
   module:
     - alloy_blog
     - text
+_core:
+  default_config_hash: pO-r3H1J_dQTyVu7QfNDRKRu28Mr8VVEtQXjOZjbZKw
 id: blog.blog.default
 targetEntityType: blog
 bundle: blog
@@ -18,6 +20,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
   name:
+    type: string_textfield
+    weight: -4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  title:
     type: string_textfield
     weight: -4
     region: content

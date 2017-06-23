@@ -9,11 +9,11 @@ third_party_settings:
       - main
     parent: 'main:'
 _core:
-  default_config_hash: Sq4ztPPRiAEj9lopyd04LKkGMkS6OarZW65pigInuGY
+  default_config_hash: XoVpsfK71zojekLdpKXfYQ24eUHsS0rBzvenF3qvo6A
 name: 'Blog Post'
 type: blog_post
 description: 'Compose a piece of writing or other item of content to be posted on one or more blogs.'
 help: ''
 new_revision: true
 preview_mode: 1
-display_submitted: true
+display_submitted: false

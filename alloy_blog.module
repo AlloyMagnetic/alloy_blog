@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\views\Views;
 
 /**
  * Implements hook_help().
@@ -29,6 +30,9 @@ function alloy_blog_theme($existing, $type, $theme, $path) {
     'render element' => 'elements',
     'file' => 'blog.page.inc',
     'template' => 'blog',
+    'variables' => [
+      'listing' => NULL,
+    ],
   ];
   return $theme;
 }
@@ -39,4 +43,24 @@ function alloy_blog_install() {
   $enabled_pathauto_types = $config->get('enabled_entity_types');
   $enabled_pathauto_types[] = 'blog';
   $config->set('enabled_entity_types', $enabled_pathauto_types)->save();
+}
+
+function alloy_blog_preprocess_node(&$variables) {
+  $node = $variables['elements']['#node'];
+  $type = $node->getType();
+  $id = $node->get('nid')->value;
+
+  if ($type == 'blog_post') {
+    // Add author bio
+    $args = [$id];
+    $view = Views::getView('author');
+    $display = 'bio_block';
+    if (is_object($view)) {
+      $view->setArguments($args);
+      $view->setDisplay($display);
+      $view->preExecute();
+      $view->execute();
+      $variables['content']['author_bio'] = $view->buildRenderable($display, $args);
+    }
+  }
 }

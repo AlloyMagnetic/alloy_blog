@@ -25,6 +25,7 @@ function template_preprocess_blog(array &$variables) {
   $blog = $variables['elements']['#blog'];
   $id = $blog->get('id')->value;
 
+  // Add listing
   $args = [$id];
   $view = Views::getView('blog');
   $display = 'blog_listing';

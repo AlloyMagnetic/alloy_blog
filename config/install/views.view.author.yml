@@ -2,20 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
-    - node.type.blog_post
+    - core.entity_view_mode.user.compact
   module:
     - node
     - user
-_core:
-  default_config_hash: pOJkJHh88duBQASfHpLikzFaf3p5lBbp7Iy4EsrqvXI
-id: blog
-label: Blog
+id: author
+label: Author
 module: views
 description: ''
 tag: ''
-base_table: node_field_data
-base_field: nid
+base_table: users_field_data
+base_field: uid
 core: 8.x
 display:
   default:
@@ -27,7 +24,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access content'
+          perm: 'access user profiles'
       cache:
         type: tag
         options: {  }
@@ -50,46 +47,28 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: full
+        type: none
         options:
-          items_per_page: 9
+          items_per_page: null
           offset: 0
-          id: 0
-          total_pages: null
-          tags:
-            previous: «
-            next: »
-            first: ''
-            last: ''
-          expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
       style:
-        type: html_list
+        type: default
         options:
           row_class: ''
           default_row_class: false
           uses_fields: false
-          type: ul
-          wrapper_class: ''
-          class: list-unstyled
       row:
-        type: 'entity:node'
+        type: 'entity:user'
         options:
-          view_mode: teaser
+          relationship: none
+          view_mode: compact
       fields:
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          entity_type: node
-          entity_field: title
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          entity_type: user
+          entity_field: name
           label: ''
           alter:
             alter_text: false
@@ -102,8 +81,6 @@ display:
             html: false
           hide_empty: false
           empty_zero: false
-          settings:
-            link_to_entity: true
           plugin_id: field
           relationship: none
           group_type: group
@@ -120,7 +97,8 @@ display:
           empty: ''
           hide_alter_empty: true
           click_sort_column: value
-          type: string
+          type: user_name
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -134,64 +112,38 @@ display:
       filters:
         status:
           value: '1'
-          table: node_field_data
+          table: users_field_data
           field: status
           plugin_id: boolean
-          entity_type: node
+          entity_type: user
           entity_field: status
           id: status
           expose:
             operator: ''
           group: 1
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          value:
-            blog_post: blog_post
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-      sorts:
-        created:
-          id: created
-          table: node_field_data
-          field: created
-          order: DESC
-          entity_type: node
-          entity_field: created
-          plugin_id: date
-          relationship: none
-          group_type: group
-          admin_label: ''
-          exposed: false
-          expose:
-            label: ''
-          granularity: second
-      title: ''
+      sorts: {  }
+      title: Author
       header: {  }
       footer: {  }
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
+      empty: {  }
+      relationships:
+        uid:
+          id: uid
+          table: users_field_data
+          field: uid
           relationship: none
           group_type: group
-          admin_label: ''
-          empty: true
-          tokenize: false
-          content:
-            value: '<p class="lead">Oops! There are no blog posts here yet.</p>'
-            format: full_html
-          plugin_id: text
-      relationships: {  }
+          admin_label: nodes
+          required: false
+          entity_type: user
+          entity_field: uid
+          plugin_id: standard
       arguments:
-        field_blog_target_id:
-          id: field_blog_target_id
-          table: node__field_blog
-          field: field_blog_target_id
-          relationship: none
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: uid
           group_type: group
           admin_label: ''
           default_action: default
@@ -220,7 +172,9 @@ display:
           validate_options: {  }
           break_phrase: false
           not: false
-          plugin_id: numeric
+          entity_type: node
+          entity_field: nid
+          plugin_id: node_nid
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -228,14 +182,12 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
-        - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  blog_listing:
+  bio_block:
     display_plugin: block
-    id: blog_listing
-    display_title: 'Blog Listing'
+    id: bio_block
+    display_title: 'Bio Block'
     position: 1
     display_options:
       display_extenders: {  }
@@ -246,7 +198,5 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
-        - 'user.node_grants:view'
         - user.permissions
       tags: {  }

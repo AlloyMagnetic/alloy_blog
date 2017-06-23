@@ -1,0 +1,45 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - assembly.assembly_type.blog_posts
+    - assembly.assembly_type.content
+    - assembly.assembly_type.corporate_phone
+    - assembly.assembly_type.culture_community_connection
+    - assembly.assembly_type.gallery
+    - assembly.assembly_type.in_this_together
+    - assembly.assembly_type.location_map
+    - assembly.assembly_type.plans
+    - assembly.assembly_type.reviews
+    - assembly.assembly_type.two_column_content
+    - field.storage.node.field_sections
+    - node.type.location_content
+id: node.location_content.field_sections
+field_name: field_sections
+entity_type: node
+bundle: location_content
+label: Sections
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:assembly'
+  handler_settings:
+    target_bundles:
+      blog_posts: blog_posts
+      content: content
+      corporate_phone: corporate_phone
+      culture_community_connection: culture_community_connection
+      gallery: gallery
+      in_this_together: in_this_together
+      location_map: location_map
+      plans: plans
+      reviews: reviews
+      two_column_content: two_column_content
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: content
+field_type: entity_reference
