@@ -5,18 +5,19 @@ dependencies:
     - field.field.node.blog_post.body
     - field.field.node.blog_post.field_blog
     - field.field.node.blog_post.field_blog_post_image
+    - field.field.node.blog_post.field_bottom_ctas
     - field.field.node.blog_post.field_categories
     - field.field.node.blog_post.field_related_posts
+    - field.field.node.blog_post.field_sidebar_ctas
     - field.field.node.blog_post.field_topics
     - image.style.thumbnail
     - node.type.blog_post
   module:
     - entity_reference_revisions
     - image
+    - inline_entity_form
     - path
     - text
-_core:
-  default_config_hash: MjvWv5sqwn2p34Za6DOp8bNy4NS25BRS7B90xuhfIvw
 id: node.blog_post.default
 targetEntityType: node
 bundle: blog_post
@@ -51,6 +52,19 @@ content:
     third_party_settings: {  }
     type: image_image
     region: content
+  field_bottom_ctas:
+    weight: 27
+    settings:
+      match_operator: CONTAINS
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
   field_categories:
     weight: 7
     settings: {  }
@@ -71,6 +85,19 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_revisions_autocomplete
+    region: content
+  field_sidebar_ctas:
+    weight: 28
+    settings:
+      match_operator: CONTAINS
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
     region: content
   field_tags:
     weight: 9

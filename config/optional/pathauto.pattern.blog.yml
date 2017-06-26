@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: Zob4V79cTKbuh7aigygW_bSue7NPGZ_5-pj_JI2Z3Zg
 id: blog
 label: Blog
 type: 'canonical_entities:blog'

@@ -4,8 +4,6 @@ dependencies:
   module:
     - alloy_blog
     - text
-_core:
-  default_config_hash: pO-r3H1J_dQTyVu7QfNDRKRu28Mr8VVEtQXjOZjbZKw
 id: blog.blog.default
 targetEntityType: blog
 bundle: blog

@@ -4,17 +4,15 @@ dependencies:
   module:
     - file
     - image
-    - node
-_core:
-  default_config_hash: s0erFda2qtd7CNvC9vGKtqv8MpvyEGoKffq56sQHsSA
-id: node.field_blog_post_image
-field_name: field_blog_post_image
-entity_type: node
+    - user
+id: user.user_picture
+field_name: user_picture
+entity_type: user
 type: image
 settings:
   uri_scheme: public
   default_image:
-    uuid: ''
+    uuid: null
     alt: ''
     title: ''
     width: null
@@ -26,6 +24,8 @@ module: image
 locked: false
 cardinality: 1
 translatable: true
-indexes: {  }
+indexes:
+  target_id:
+    - target_id
 persist_with_no_fields: false
 custom_storage: false

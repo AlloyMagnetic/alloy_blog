@@ -7,37 +7,46 @@ dependencies:
     - field.field.user.user.field_first_name
     - field.field.user.user.field_job_title
     - field.field.user.user.field_last_name
+    - field.field.user.user.user_picture
+    - image.style.square_small
   module:
     - fences
+    - image
     - text
     - user
-_core:
-  default_config_hash: '-3qG_Tt33-HjdNCU-iZYgXVLdo302Z63zKbReifrOfs'
 id: user.user.compact
 targetEntityType: user
 bundle: user
 mode: compact
 content:
   field_bio:
-    type: text_summary_or_trimmed
-    weight: 1
+    type: text_default
+    weight: 2
     region: content
     label: hidden
-    settings:
-      trim_length: 300
-    third_party_settings:
-      fences:
-        fences_field_tag: none
-        fences_field_classes: ''
-        fences_field_item_tag: none
-        fences_field_item_classes: ''
-        fences_label_tag: none
-        fences_label_classes: ''
+    settings: {  }
+    third_party_settings: {  }
   realname:
     weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
+  user_picture:
+    type: image
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      image_style: square_small
+      image_link: ''
+    third_party_settings:
+      fences:
+        fences_field_tag: div
+        fences_field_classes: ''
+        fences_field_item_tag: div
+        fences_field_item_classes: ''
+        fences_label_tag: div
+        fences_label_classes: ''
 hidden:
   field_first_name: true
   field_job_title: true

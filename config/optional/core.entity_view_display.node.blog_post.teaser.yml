@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.blog_post.field_blog
     - field.field.node.blog_post.field_blog_post_image
     - field.field.node.blog_post.field_categories
+    - field.field.node.blog_post.field_related_posts
     - field.field.node.blog_post.field_topics
     - image.style.large
     - node.type.blog_post
@@ -15,8 +16,6 @@ dependencies:
     - image
     - text
     - user
-_core:
-  default_config_hash: d50bJzcObsy33iJkfGepgWbQqfaeLSflROiLnILJObQ
 id: node.blog_post.teaser
 targetEntityType: node
 bundle: blog_post
@@ -69,5 +68,6 @@ content:
     third_party_settings: {  }
 hidden:
   field_blog: true
+  field_related_posts: true
   field_tags: true
   field_topics: true

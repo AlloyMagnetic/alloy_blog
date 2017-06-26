@@ -6,27 +6,36 @@ dependencies:
     - field.field.user.user.field_first_name
     - field.field.user.user.field_job_title
     - field.field.user.user.field_last_name
+    - field.field.user.user.user_picture
   module:
+    - image
     - text
     - user
-_core:
-  default_config_hash: PjeBkSVFesB-EfEVAzbP2i52h8_NDhC4SAnOSD2_vFw
 id: user.user.default
 targetEntityType: user
 bundle: user
 mode: default
 content:
   field_bio:
-    weight: 1
+    type: text_default
+    weight: 2
+    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
-    region: content
   realname:
     weight: 0
     region: content
     settings: {  }
+    third_party_settings: {  }
+  user_picture:
+    type: image
+    weight: 1
+    region: content
+    label: inline
+    settings:
+      image_style: ''
+      image_link: ''
     third_party_settings: {  }
 hidden:
   field_first_name: true
