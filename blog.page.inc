@@ -21,6 +21,7 @@ use Drupal\views\Views;
  *   - attributes: HTML attributes for the containing element.
  */
 function template_preprocess_blog(array &$variables) {
+  $variables['listing'] = NULL;
   // Fetch Blog Entity Object.
   if (!isset($variables['elements']['#blog'])) {
     return;

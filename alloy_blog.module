@@ -30,9 +30,6 @@ function alloy_blog_theme($existing, $type, $theme, $path) {
     'render element' => 'elements',
     'file' => 'blog.page.inc',
     'template' => 'blog',
-    'variables' => [
-      'listing' => NULL,
-    ],
   ];
   return $theme;
 }

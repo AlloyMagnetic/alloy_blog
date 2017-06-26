@@ -51,7 +51,7 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/blog/{blog}",
+ *     "canonical" = "/blog/{blog}",
  *     "add-form" = "/admin/structure/blog/add",
  *     "edit-form" = "/admin/structure/blog/{blog}/edit",
  *     "delete-form" = "/admin/structure/blog/{blog}/delete",
