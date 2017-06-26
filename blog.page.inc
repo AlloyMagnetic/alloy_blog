@@ -22,6 +22,9 @@ use Drupal\views\Views;
  */
 function template_preprocess_blog(array &$variables) {
   // Fetch Blog Entity Object.
+  if (!isset($variables['elements']['#blog'])) {
+    return;
+  }
   $blog = $variables['elements']['#blog'];
   $id = $blog->get('id')->value;
 
