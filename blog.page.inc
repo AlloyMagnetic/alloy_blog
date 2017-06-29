@@ -21,7 +21,7 @@ use Drupal\views\Views;
  *   - attributes: HTML attributes for the containing element.
  */
 function template_preprocess_blog(array &$variables) {
-  $variables['listing'] = NULL;
+  $variables['content']['listing'] = NULL;
   // Fetch Blog Entity Object.
   if (!isset($variables['elements']['#blog'])) {
     return;
@@ -45,7 +45,7 @@ function template_preprocess_blog(array &$variables) {
     $view->setDisplay($display);
     $view->preExecute();
     $view->execute();
-    $variables['listing'] = $view->buildRenderable($display, $args);
+    $variables['content']['listing'] = $view->buildRenderable($display, $args);
   }
 
   // Helpful $content variable for templates.
