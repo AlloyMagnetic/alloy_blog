@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - assembly.assembly_type.hubspot_cta_embed
+    - assembly.assembly_type.hubspot_form_embed
     - field.storage.node.field_sidebar_ctas
     - node.type.blog_post
   module:
@@ -22,8 +23,9 @@ settings:
   handler_settings:
     target_bundles:
       hubspot_cta_embed: hubspot_cta_embed
+      hubspot_form_embed: hubspot_form_embed
     sort:
       field: _none
     auto_create: false
-    auto_create_bundle: ''
+    auto_create_bundle: hubspot_cta_embed
 field_type: entity_reference_revisions
