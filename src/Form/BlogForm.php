@@ -28,6 +28,13 @@ class BlogForm extends ContentEntityForm {
       ];
     }
 
+    $form['status'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Published'),
+      '#default_value' => $this->entity->isPublished(),
+      '#weight' => 11,
+    ];
+
     $entity = $this->entity;
 
     return $form;
