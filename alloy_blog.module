@@ -65,7 +65,7 @@ function alloy_blog_preprocess_node(&$variables) {
 }
 
 function alloy_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  if ($form_id == 'node_blog_post_form') {
+  if (in_array($form_id, ['node_blog_post_edit_form', 'node_blog_post_form'])) {
     $ids = \Drupal::entityQuery('blog')->execute();
     if (is_array($ids) && count($ids) == 1) {
       $blog = Blog::load(reset($ids));
