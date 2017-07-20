@@ -7,6 +7,8 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\views\Views;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\alloy_blog\Entity\Blog;
 
 /**
  * Implements hook_help().
@@ -58,6 +60,17 @@ function alloy_blog_preprocess_node(&$variables) {
       $view->preExecute();
       $view->execute();
       $variables['content']['author_bio'] = $view->buildRenderable($display, $args);
+    }
+  }
+}
+
+function alloy_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'node_blog_post_form') {
+    $ids = \Drupal::entityQuery('blog')->execute();
+    if (is_array($ids) && count($ids) == 1) {
+      $blog = Blog::load(reset($ids));
+      $form['field_blog']['widget'][0]['target_id']['#default_value'] = $blog;
+      $form['field_blog']['#access'] = FALSE;
     }
   }
 }
