@@ -1,0 +1,12 @@
+{
+  "name": "alloy/alloy_blog",
+  "type": "drupal-alloy-module",
+  "description": "Starter pack for a full featured blog in Drupal",
+  "keywords": ["Drupal"],
+  "license": "Proprietary",
+  "homepage": "https://code.kilpho.st/alloy/alloy-blog",
+  "minimum-stability": "dev",
+  "support": {
+  },
+  "require": { }
+}
