@@ -1,6 +1,6 @@
 {
   "name": "alloy/alloy_blog",
-  "type": "drupal-alloy-module",
+  "type": "drupal-module",
   "description": "Starter pack for a full featured blog in Drupal",
   "keywords": ["Drupal"],
   "license": "Proprietary",
