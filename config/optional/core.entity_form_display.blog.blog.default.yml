@@ -7,9 +7,7 @@ dependencies:
     - field.field.node.blog_post.field_blog_post_image
     - field.field.node.blog_post.field_bottom_ctas
     - field.field.node.blog_post.field_categories
-    - field.field.node.blog_post.field_featured_on_microsites
     - field.field.node.blog_post.field_related_posts
-    - field.field.node.blog_post.field_sidebar_ctas
     - field.field.node.blog_post.field_topics
     - image.style.thumbnail
     - node.type.blog_post
@@ -26,121 +24,84 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 9
+    weight: 5
+    region: content
     settings:
       rows: 9
       summary_rows: 3
       placeholder: ''
     third_party_settings: {  }
-    region: content
   created:
     type: datetime_timestamp
-    weight: 2
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   field_blog:
-    weight: 4
+    type: options_select
+    weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_blog_post_image:
-    weight: 8
+    type: image_image
+    weight: 4
+    region: content
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
     third_party_settings: {  }
-    type: image_image
-    region: content
   field_bottom_ctas:
-    weight: 11
-    settings:
-      form_mode: default
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: true
-      match_operator: CONTAINS
-      override_labels: false
-    third_party_settings: {  }
     type: inline_entity_form_complex
-    region: content
-  field_categories:
-    weight: 6
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
-    region: content
-  field_category:
-    weight: 6
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
-    region: content
-  field_featured_on_microsites:
-    weight: 5
-    settings:
-      display_label: true
-    third_party_settings: {  }
-    type: boolean_checkbox
-    region: content
-  field_related_posts:
-    weight: 12
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_revisions_autocomplete
-    region: content
-  field_sidebar_ctas:
-    weight: 10
-    settings:
-      form_mode: default
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: true
-      match_operator: CONTAINS
-      override_labels: false
-    third_party_settings: {  }
-    type: inline_entity_form_complex
-    region: content
-  field_tags:
-    weight: 9
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete_tags
-    region: content
-  field_topics:
     weight: 7
+    region: content
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+      collapsible: false
+      collapsed: false
+    third_party_settings: {  }
+  field_categories:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: entity_reference_autocomplete_tags
+  field_related_posts:
+    type: entity_reference_revisions_autocomplete
+    weight: 6
     region: content
-  path:
-    type: path
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_topics:
+    type: entity_reference_autocomplete_tags
     weight: 3
     region: content
-    settings: {  }
-    third_party_settings: {  }
-  sticky:
-    type: boolean_checkbox
-    weight: 13
-    region: content
     settings:
-      display_label: true
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 10
+    region: content
+    settings: {  }
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
       size: 60
@@ -148,7 +109,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 1
+    weight: 9
     settings:
       match_operator: CONTAINS
       size: 60
@@ -157,3 +118,4 @@ content:
     third_party_settings: {  }
 hidden:
   promote: true
+  sticky: true
