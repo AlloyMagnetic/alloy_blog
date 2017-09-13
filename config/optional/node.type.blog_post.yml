@@ -8,6 +8,8 @@ third_party_settings:
     available_menus:
       - main
     parent: 'main:'
+_core:
+  default_config_hash: 6gjeYMF4j82Rx3hoIyIkLzwee1P6kI_AKKsV30thVg8
 name: 'Blog Post'
 type: blog_post
 description: 'Compose a piece of writing or other item of content to be posted on one or more blogs.'

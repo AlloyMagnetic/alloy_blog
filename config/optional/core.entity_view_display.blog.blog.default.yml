@@ -1,9 +1,13 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - field.field.blog.blog.field_url_slug
   module:
     - alloy_blog
     - text
+_core:
+  default_config_hash: cVP5z1lDKRy0dY9w_VDkM2SpWCOP_YHIfo7kd40INhc
 id: blog.blog.default
 targetEntityType: blog
 bundle: blog
@@ -27,11 +31,12 @@ content:
   title:
     label: hidden
     type: string
-    weight: -4
+    weight: 0
     region: content
     settings:
       link_to_entity: false
     third_party_settings: {  }
 hidden:
+  field_url_slug: true
   url_alias: true
   user_id: true
