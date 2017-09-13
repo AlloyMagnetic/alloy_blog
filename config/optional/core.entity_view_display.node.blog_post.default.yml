@@ -8,14 +8,9 @@ dependencies:
     - field.field.node.blog_post.field_bottom_ctas
     - field.field.node.blog_post.field_categories
     - field.field.node.blog_post.field_related_posts
-    - field.field.node.blog_post.field_sidebar_ctas
     - field.field.node.blog_post.field_topics
-    - image.style.large
     - node.type.blog_post
   module:
-    - entity_reference_revisions
-    - fences
-    - image
     - text
     - user
 id: node.blog_post.default
@@ -24,91 +19,21 @@ bundle: blog_post
 mode: default
 content:
   body:
-    label: hidden
     type: text_default
-    weight: 3
+    weight: 0
+    region: content
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    region: content
-  field_blog_post_image:
-    weight: 2
-    label: hidden
-    settings:
-      image_style: large
-      image_link: ''
-    third_party_settings:
-      fences:
-        fences_field_tag: div
-        fences_field_classes: ''
-        fences_field_item_tag: div
-        fences_field_item_classes: ''
-        fences_label_tag: div
-        fences_label_classes: ''
-    type: image
-    region: content
-  field_bottom_ctas:
-    weight: 6
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    type: entity_reference_revisions_entity_view
-    region: content
-  field_categories:
-    weight: 1
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_category:
-    weight: 1
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_related_posts:
-    weight: 5
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    type: entity_reference_revisions_entity_view
-    region: content
-  field_sidebar_ctas:
-    weight: 7
-    label: hidden
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    type: entity_reference_revisions_entity_view
-    region: content
-  field_tags:
-    weight: 4
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_topics:
-    weight: 4
-    label: inline
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   links:
-    weight: 0
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   field_blog: true
+  field_blog_post_image: true
+  field_bottom_ctas: true
+  field_categories: true
+  field_related_posts: true
+  field_topics: true
