@@ -1,0 +1,16 @@
+alloy_blog.blog_term_content:
+  path: '/blog_term_content/{blog}/{term}'
+  defaults:
+    _controller: '\Drupal\alloy_blog\Controller\BlogTermContentController::getContent'
+    _title_callback: '\Drupal\alloy_blog\Controller\BlogTermContentController::getTitle'
+    blog: \d+
+    term: \d+
+  options:
+    parameters:
+      blog:
+        type: entity:blog
+      term:
+        type: entity:taxonomy_term
+  requirements:
+    _permission: 'access content'
+

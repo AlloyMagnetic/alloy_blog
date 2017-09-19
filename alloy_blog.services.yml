@@ -1,0 +1,5 @@
+services:
+  alloy_blog.blog_term_path_manager:
+    class: Drupal\alloy_blog\BlogTermPathManager
+    arguments: []
+

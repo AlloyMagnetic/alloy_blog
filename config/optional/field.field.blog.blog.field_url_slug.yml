@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.blog.field_url_slug
+  module:
+    - alloy_blog
+id: blog.blog.field_url_slug
+field_name: field_url_slug
+entity_type: blog
+bundle: blog
+label: 'URL Slug'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

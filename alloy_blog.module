@@ -5,10 +5,11 @@
  * Contains alloy_blog.module.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\views\Views;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\alloy_blog\Entity\Blog;
+use Drupal\views\Views;
 
 /**
  * Implements hook_help().
@@ -72,5 +73,17 @@ function alloy_blog_form_alter(&$form, FormStateInterface $form_state, $form_id)
       $form['field_blog']['widget'][0]['target_id']['#default_value'] = $blog;
       $form['field_blog']['#access'] = FALSE;
     }
+  }
+}
+
+function alloy_blog_entity_insert(EntityInterface $entity) {
+  if (in_array($entity->getEntityTypeId(), ['blog', 'taxonomy_term'])) {
+    \Drupal::service('alloy_blog.blog_term_path_manager')->blogOrTermEdit($entity);
+  }
+}
+
+function alloy_blog_entity_update(EntityInterface $entity) {
+  if (in_array($entity->getEntityTypeId(), ['blog', 'taxonomy_term'])) {
+    \Drupal::service('alloy_blog.blog_term_path_manager')->blogOrTermEdit($entity);
   }
 }

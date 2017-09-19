@@ -5,6 +5,6 @@ core: 8.x
 package: Alloy
 dependencies:
   - pathauto
-  - alloy_ctas
+  - alloy_assemblies
   - inline_entity_form
   - entity_reference_revisions
