@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: blog_page
+label: 'Blog Page'
+effects:
+  c1b655d7-4bdd-40ac-83bf-40b62852f1c8:
+    uuid: c1b655d7-4bdd-40ac-83bf-40b62852f1c8
+    id: image_scale
+    weight: 1
+    data:
+      width: 800
+      height: null
+      upscale: false

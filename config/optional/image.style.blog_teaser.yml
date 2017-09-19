@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: blog_teaser
+label: 'Blog Teaser'
+effects:
+  c9947520-60c3-4182-84b5-c847471769a3:
+    uuid: c9947520-60c3-4182-84b5-c847471769a3
+    id: image_scale
+    weight: 1
+    data:
+      width: 480
+      height: null
+      upscale: false
