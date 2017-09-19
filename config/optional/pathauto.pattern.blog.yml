@@ -4,7 +4,7 @@ dependencies: {  }
 id: blog
 label: Blog
 type: 'canonical_entities:blog'
-pattern: '/blog/[blog:title]'
+pattern: '/blog/[blog:field_url_slug]'
 selection_criteria: {  }
 selection_logic: and
 weight: 0
