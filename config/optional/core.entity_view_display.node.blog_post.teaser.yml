@@ -9,8 +9,9 @@ dependencies:
     - field.field.node.blog_post.field_bottom_ctas
     - field.field.node.blog_post.field_categories
     - field.field.node.blog_post.field_related_posts
+    - field.field.node.blog_post.field_sidebar_ctas
     - field.field.node.blog_post.field_topics
-    - image.style.large
+    - image.style.blog_teaser
     - node.type.blog_post
   module:
     - fences
@@ -36,15 +37,15 @@ content:
     region: content
     label: hidden
     settings:
-      image_style: large
+      image_style: blog_teaser
       image_link: content
     third_party_settings:
       fences:
-        fences_field_tag: div
+        fences_field_tag: none
         fences_field_classes: ''
-        fences_field_item_tag: div
+        fences_field_item_tag: none
         fences_field_item_classes: ''
-        fences_label_tag: div
+        fences_label_tag: none
         fences_label_classes: ''
   field_categories:
     type: entity_reference_label
@@ -53,7 +54,14 @@ content:
     label: hidden
     settings:
       link: true
-    third_party_settings: {  }
+    third_party_settings:
+      fences:
+        fences_field_tag: div
+        fences_field_classes: ''
+        fences_field_item_tag: ul
+        fences_field_item_classes: ''
+        fences_label_tag: h4
+        fences_label_classes: ''
   field_category:
     type: entity_reference_label
     weight: 1
@@ -71,5 +79,6 @@ hidden:
   field_blog: true
   field_bottom_ctas: true
   field_related_posts: true
+  field_sidebar_ctas: true
   field_tags: true
   field_topics: true
