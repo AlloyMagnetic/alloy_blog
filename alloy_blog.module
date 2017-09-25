@@ -7,8 +7,10 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\alloy_blog\Entity\Blog;
+use Drupal\views\Entity\View;
 use Drupal\views\Views;
 
 /**
@@ -47,21 +49,66 @@ function alloy_blog_install() {
 
 function alloy_blog_preprocess_node(&$variables) {
   $node = $variables['elements']['#node'];
+
   $type = $node->getType();
   $id = $node->get('nid')->value;
+  $view_mode = $variables['view_mode'];
 
   if ($type == 'blog_post') {
-    // Add author bio
-    $args = [$id];
-    $view = Views::getView('author');
-    $display = 'bio_block';
-    if (is_object($view)) {
-      $view->setArguments($args);
-      $view->setDisplay($display);
-      $view->preExecute();
-      $view->execute();
-      $variables['content']['author_bio'] = $view->buildRenderable($display, $args);
+    if ($view_mode == 'full') {
+      // Add author bio
+      $args = [$id];
+      $view = Views::getView('author');
+      $display = 'bio_block';
+      if (is_object($view)) {
+        $view->setArguments($args);
+        $view->setDisplay($display);
+        $view->preExecute();
+        $view->execute();
+        $variables['content']['author_bio'] = $view->buildRenderable($display, $args);
+      }
     }
+    else if ($view_mode == 'teaser') {
+      // Limit to 1 category in teasers
+      $category_count = count($variables['content']['field_categories']['#items']);
+      for ($i = 1; $i < $category_count; $i++) {
+        unset($variables['content']['field_categories'][$i]);
+      }
+    }
+  }
+}
+
+function alloy_blog_preprocess_assembly(&$variables) {
+  $assembly = $variables['elements']['#assembly'];
+  $type = $assembly->bundle();
+
+  if ($type == 'blog_feed') {
+    $args = [
+      'fields' => [
+        'blog',
+        'category',
+        'author'
+      ],
+    ];
+    foreach($args['fields'] as $field) {
+      foreach($assembly->get('field_filter_by_' . $field)->getValue() as $value) {
+        $args['values'][$field][] = $value['target_id'];
+      }
+      if (count($args['values'][$field])) {
+        $args['view_args'][] = implode('+', $args['values'][$field]);
+      }
+      else {
+        $args['view_args'][] = 'all';
+      }
+    }
+
+    $view = \Drupal\views\Views::getView('blog_feed');
+    $display = 'embed_1';
+    $variables['content']['view'] = $view->buildRenderable($display, $args['view_args']);
+    $variables['content']['view']['#weight'] = 5;
+
+    $variables['content']['more'] = Link::fromTextAndUrl('More Blog Posts', $view->getUrl($args['view_args'], 'page_1'))->toRenderable();
+    $variables['content']['more']['#weight'] = 6;
   }
 }
 

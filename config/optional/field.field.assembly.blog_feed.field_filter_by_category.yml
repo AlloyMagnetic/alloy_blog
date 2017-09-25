@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - assembly.assembly_type.blog_feed
+    - field.storage.assembly.field_filter_by_category
+    - taxonomy.vocabulary.categories
+id: assembly.blog_feed.field_filter_by_category
+field_name: field_filter_by_category
+entity_type: assembly
+bundle: blog_feed
+label: 'Filter by Category'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categories: categories
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: categories
+field_type: entity_reference

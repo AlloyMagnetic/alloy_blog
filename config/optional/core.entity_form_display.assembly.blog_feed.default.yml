@@ -1,0 +1,67 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - assembly.assembly_type.blog_feed
+    - field.field.assembly.blog_feed.field_filter_by_author
+    - field.field.assembly.blog_feed.field_filter_by_blog
+    - field.field.assembly.blog_feed.field_filter_by_category
+    - field.field.assembly.blog_feed.field_title
+id: assembly.blog_feed.default
+targetEntityType: assembly
+bundle: blog_feed
+mode: default
+content:
+  field_filter_by_author:
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_filter_by_blog:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_filter_by_category:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_title:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  visual_styles:
+    type: options_select
+    multiple: true
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  user_id: true
