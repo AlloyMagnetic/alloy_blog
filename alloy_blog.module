@@ -121,9 +121,6 @@ function alloy_blog_preprocess_assembly(&$variables) {
     $blog_count = count($args['values']['blog']);
     $term_count = count($args['values']['category']);
 
-    kint($blog_count);
-    kint($term_count);
-
     if ($blog_count == 1 && $term_count == 0) {
       $route_params['blog'] = implode($args['values']['blog']);
       $variables['content']['more']['link'] = Link::fromTextAndUrl('More Blog Posts', Url::fromRoute('entity.blog.canonical', $route_params))->toRenderable();
