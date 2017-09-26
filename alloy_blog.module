@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\alloy_blog\Entity\Blog;
 use Drupal\views\Entity\View;
 use Drupal\views\Views;
@@ -74,6 +75,10 @@ function alloy_blog_preprocess_node(&$variables) {
       for ($i = 1; $i < $category_count; $i++) {
         unset($variables['content']['field_categories'][$i]);
       }
+      // Add class to title if no image present
+      if (!isset($variables['content']['field_blog_post_image'][0])) {
+        $variables['title_attributes']['class'][] = 'no-image';
+      }
     }
   }
 }
@@ -107,8 +112,31 @@ function alloy_blog_preprocess_assembly(&$variables) {
     $variables['content']['view'] = $view->buildRenderable($display, $args['view_args']);
     $variables['content']['view']['#weight'] = 5;
 
-    $variables['content']['more'] = Link::fromTextAndUrl('More Blog Posts', $view->getUrl($args['view_args'], 'page_1'))->toRenderable();
+    $variables['content']['more']['link'] = Link::fromTextAndUrl('More Blog Posts', $view->getUrl($args['view_args'], 'page_1'))->toRenderable();
     $variables['content']['more']['#weight'] = 6;
+
+    // If the filter is a single blog, single term, or single blog+term, use the
+    // seo friendly url aliases for the More Blog Posts link
+    $route_params = false;
+    $blog_count = count($args['values']['blog']);
+    $term_count = count($args['values']['category']);
+
+    kint($blog_count);
+    kint($term_count);
+
+    if ($blog_count == 1 && $term_count == 0) {
+      $route_params['blog'] = implode($args['values']['blog']);
+      $variables['content']['more']['link'] = Link::fromTextAndUrl('More Blog Posts', Url::fromRoute('entity.blog.canonical', $route_params))->toRenderable();
+    }
+    else if ($blog_count == 0 && $term_count == 1) {
+      $route_params['taxonomy_term'] = implode($args['values']['category']);
+      $variables['content']['more']['link'] = Link::fromTextAndUrl('More Blog Posts', Url::fromRoute('entity.taxonomy_term.canonical', $route_params))->toRenderable();
+    }
+    else if ($blog_count == 1 && $term_count == 1) {
+      $route_params['blog'] = implode($args['values']['blog']);
+      $route_params['term'] = implode($args['values']['category']);
+      $variables['content']['more']['link'] = Link::fromTextAndUrl('More Blog Posts', Url::fromRoute('alloy_blog.blog_term_content', $route_params))->toRenderable();
+    }
   }
 }
 
