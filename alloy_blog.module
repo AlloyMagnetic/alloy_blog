@@ -113,11 +113,12 @@ function alloy_blog_preprocess_assembly(&$variables) {
 }
 
 function alloy_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Don't show the blog field if there is only one blog
   if (in_array($form_id, ['node_blog_post_edit_form', 'node_blog_post_form'])) {
     $ids = \Drupal::entityQuery('blog')->execute();
     if (is_array($ids) && count($ids) == 1) {
       $blog = Blog::load(reset($ids));
-      $form['field_blog']['widget'][0]['target_id']['#default_value'] = $blog;
+      $form['field_blog']['widget']['#default_value'] = [$blog->id() => $blog->id()];
       $form['field_blog']['#access'] = FALSE;
     }
   }
