@@ -1,0 +1,20 @@
+uuid: 6e4258b4-b853-41e8-a024-a1ed79e84687
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_familiar_name
+  module:
+    - user
+id: user.user.field_familiar_name
+field_name: field_familiar_name
+entity_type: user
+bundle: user
+label: 'Familiar Name'
+description: 'Used in link text such as "Contact Bill"'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,9 +1,9 @@
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - user
-id: user.full
-label: 'User account'
+id: user.register
+label: Register
 targetEntityType: user
 cache: true

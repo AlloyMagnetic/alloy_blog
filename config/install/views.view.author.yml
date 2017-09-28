@@ -61,7 +61,7 @@ display:
         type: 'entity:user'
         options:
           relationship: none
-          view_mode: compact
+          view_mode: author_bio
       fields:
         name:
           id: name

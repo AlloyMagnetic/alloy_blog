@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - user
-id: user.token
-label: Token
+id: user.author_bio
+label: 'Author Bio'
 targetEntityType: user
 cache: true

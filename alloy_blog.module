@@ -5,12 +5,14 @@
  * Contains alloy_blog.module.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\alloy_blog\Entity\Blog;
+use Drupal\user\UserInterface;
 use Drupal\views\Entity\View;
 use Drupal\views\Views;
 
@@ -40,13 +42,12 @@ function alloy_blog_theme($existing, $type, $theme, $path) {
   return $theme;
 }
 
-function alloy_blog_install() {
-  // Enable pathauto for blog entities
-  $config = \Drupal::service('config.factory')->getEditable('pathauto.settings');
-  $enabled_pathauto_types = $config->get('enabled_entity_types');
-  $enabled_pathauto_types[] = 'blog';
-  $config->set('enabled_entity_types', $enabled_pathauto_types)->save();
+function alloy_blog_theme_registry_alter(&$theme_registry) {
+  $path = drupal_get_path('module', 'alloy_blog');
+  $theme_registry['user']['theme_path'] = $path;
+  $theme_registry['user']['path'] = $path . '/templates';
 }
+
 
 function alloy_blog_preprocess_node(&$variables) {
   $node = $variables['elements']['#node'];
@@ -66,7 +67,10 @@ function alloy_blog_preprocess_node(&$variables) {
         $view->setDisplay($display);
         $view->preExecute();
         $view->execute();
-        $variables['content']['author_bio'] = $view->buildRenderable($display, $args);
+        $variables['content']['author_bio'] = [
+          'bio' => $view->buildRenderable($display, $args),
+          '#weight' => 10,
+        ];
       }
     }
     else if ($view_mode == 'teaser') {
@@ -81,7 +85,41 @@ function alloy_blog_preprocess_node(&$variables) {
       }
     }
   }
+
 }
+
+function alloy_blog_entity_view(&$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity->getEntityTypeId() == 'user') {
+    $first_name = $entity->get('field_first_name')->getValue()[0]['value'];
+    $last_name = $entity->get('field_last_name')->getValue()[0]['value'];
+    $familiar_name = $entity->get('field_familiar_name')->getValue()[0]['value'];
+    $familiar_name = $familiar_name ? $familiar_name : $first_name;
+
+    if (isset($build['field_facebook'])) {
+      $build['field_facebook'][0]['#title'] = "Facebook";
+    }
+
+    $build['contact_link'] = [
+      'link' => Link::createFromRoute('Contact ' . $familiar_name, 'entity.user.contact_form', ['user' => 2], ['attributes' => ['class' => ['btn', 'btn-primary']]])->toRenderable(),
+      '#weight' => 10,
+    ];
+    $name = implode(' ', [$first_name, $last_name]);
+    $build['full_name'] = [
+      '#markup' => $name,
+      '#weight' => 0,
+    ];
+    if (isset($build['field_facebook'])) {
+      $build['field_facebook'][0]['#title'] = "Facebook";
+    }
+    if (isset($build['field_linkedin'])) {
+      $build['field_linkedin'][0]['#title'] = "LinkedIn";
+    }
+    if (isset($build['field_twitter_handle'])) {
+      $build['field_twitter_handle'][0] = Link::fromTextAndUrl('Twitter', Url::fromUri('https://www.twitter.com/' . $entity->get('field_twitter_handle')->getValue()[0]['value']));
+    }
+  }
+}
+
 
 function alloy_blog_preprocess_assembly(&$variables) {
   $assembly = $variables['elements']['#assembly'];

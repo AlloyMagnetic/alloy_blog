@@ -1,0 +1,9 @@
+<article{{ attributes }}>
+  {% if content %}
+    {{ content.user_picture }}
+    <div class="text-content">
+      <h3>{{ content.full_name }}</h3>
+      {{- content|without('full_name', 'user_picture') -}}
+    </div>
+  {% endif %}
+</article>
