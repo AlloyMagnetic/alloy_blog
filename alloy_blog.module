@@ -105,15 +105,12 @@ function alloy_blog_entity_view(&$build, EntityInterface $entity, EntityViewDisp
   if ($entity->getEntityTypeId() == 'user' && $view_mode == 'author_bio') {
     $first_name = $entity->get('field_first_name')->getValue()[0]['value'];
     $last_name = $entity->get('field_last_name')->getValue()[0]['value'];
-    if (isset($entity->get('field_familiar_name')->getValue()[0]['value'])) {
-      $familiar_name = $entity->get('field_familiar_name')->getValue()[0]['value'];
+    $familiar_name = $entity->get('field_familiar_name')->getValue();
+    if (isset($familiar_name[0]['value'])) {
+      $familiar_name = $familiar_name[0]['value'];
     }
     else {
       $familiar_name = $first_name;
-    }
-
-    if (isset($build['field_facebook'])) {
-      $build['field_facebook'][0]['#title'] = "Facebook";
     }
 
     $build['contact_link'] = [
