@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.blog.blog.field_disqus_shortname
     - field.field.blog.blog.field_url_slug
   module:
     - alloy_blog
@@ -19,6 +20,14 @@ content:
       placeholder: ''
       rows: 5
     third_party_settings: {  }
+  field_disqus_shortname:
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_url_slug:
     weight: 2
     settings:

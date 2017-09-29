@@ -72,6 +72,17 @@ function alloy_blog_preprocess_node(&$variables) {
           '#weight' => 10,
         ];
       }
+
+      // Add disqus shortname
+      if ($blog_id = $node->get('field_blog')->getValue()[0]['target_id']) {
+        $blog = Blog::load($blog_id);
+        $shortname = $blog->get('field_disqus_shortname')->getValue();
+        if (isset($shortname[0]['value'])) {
+          $variables['content']['disqus_shortname']['#markup'] = $shortname[0]['value'];
+          $variables['content']['disqus_page_id']['#markup'] = 'node.blog_post.' . $node->id();
+        }
+      }
+
     }
     else if ($view_mode == 'teaser') {
       // Limit to 1 category in teasers

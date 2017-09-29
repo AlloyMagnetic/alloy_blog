@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.blog.field_disqus_shortname
+  module:
+    - alloy_blog
+id: blog.blog.field_disqus_shortname
+field_name: field_disqus_shortname
+entity_type: blog
+bundle: blog
+label: 'Disqus Shortname'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
