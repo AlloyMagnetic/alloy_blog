@@ -158,8 +158,8 @@ function alloy_blog_preprocess_assembly(&$variables) {
     // If the filter is a single blog, single term, or single blog+term, use the
     // seo friendly url aliases for the More Blog Posts link
     $route_params = false;
-    $blog_count = count($args['values']['blog']);
-    $term_count = count($args['values']['category']);
+    $blog_count = isset($args['values']['blog']) ? count($args['values']['blog']) : 0;
+    $term_count = isset($args['values']['category']) ? count($args['values']['category']) : 0;
 
     if ($blog_count == 1 && $term_count == 0) {
       $route_params['blog'] = implode($args['values']['blog']);
