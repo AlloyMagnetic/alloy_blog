@@ -73,7 +73,20 @@ function alloy_blog_preprocess_node(&$variables) {
         ];
       }
 
+      // Add facebook app id
+      $fb_app_id = \Drupal::config('alloy_blog.settings')->get('facebook_app_id');
+      if ($fb_app_id) {
+        $variables['content']['facebook_app_id']['#markup'] = $fb_app_id;
+      }
+
       // Add disqus shortname
+      // Config can provide a default shortname, or individual blogs can
+      // provide field_disqus_shortname
+      $shortname = \Drupal::config('alloy_blog.settings')->get('default_disqus_shortname');
+      if ($shortname) {
+        $variables['content']['disqus_shortname']['#markup'] = $shortname;
+        $variables['content']['disqus_page_id']['#markup'] = 'node.blog_post.' . $node->id();
+      }
       if ($blog_id = $node->get('field_blog')->getValue()[0]['target_id']) {
         $blog = Blog::load($blog_id);
         $shortname = $blog->get('field_disqus_shortname')->getValue();

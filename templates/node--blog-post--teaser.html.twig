@@ -1,0 +1,23 @@
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+  <div{{ content_attributes.addClass('content') }}>
+    {{ content.field_blog_post_image }}
+    {{ content.field_categories }}
+    {{ title_prefix }}
+      <h2{{ title_attributes }}>
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h2>
+    {{ title_suffix }}
+
+    {{ content|without('field_blog_post_image', 'field_categories') }}
+  </div>
+</article>

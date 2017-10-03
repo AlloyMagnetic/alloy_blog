@@ -1,0 +1,79 @@
+{%
+  set classes = [
+    node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+
+  {% if content.facebook_app_id %}
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId={{ content.facebook_app_id }}";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  {% endif %}
+
+  <div class="authorship-wrapper">
+    <h4 class="blog-authorship">{% if node.Owner.field_first_name.value or node.Owner.field_last_name.value %}<span class="author">{{ node.Owner.field_first_name.value }} {{ node.Owner.field_last_name.value }} | </span>{% endif %}<span class="time">{{ node.createdtime|date(' F j, Y') }}</span></h4>
+
+    <div class="social-buttons">
+      <span class="social-btn"><a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></span>
+      <span class="social-btn"><script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+      <script type="IN/Share"></script></span>
+      {% if content.facebook_app_id %}
+      <span class="social-btn"><div class="fb-share-button" data-href="{{ url('entity.node.canonical', {'node': node.id}) }}" data-layout="button" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="{{ url('entity.node.canonical', {'node': node.id}) }}">Share</a></div></span>
+      {% endif %}
+    </div>
+  </div>
+
+  {{ title_prefix }}
+  {% if not page %}
+    <h2{{ title_attributes }}>
+      <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+    </h2>
+  {% endif %}
+  {{ title_suffix }}
+
+  {% if display_submitted %}
+    <footer>
+      {{ author_picture }}
+      <div{{ author_attributes.addClass('author') }}>
+        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+        {{ metadata }}
+      </div>
+    </footer>
+  {% endif %}
+
+  <div{{ content_attributes.addClass('content') }}>
+    {{ content|without("disqus_shortname", "disqus_page_id", "facebook_app_id") }}
+  </div>
+
+  {% if content.disqus_shortname %}
+  <div class="disqus-wrapper">
+    <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+            this.page.identifier = "{{ content.disqus_page_id|raw }}"
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+
+            s.src = '//{{ content.disqus_shortname|raw }}.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+  {% endif %}
+
+</article>
