@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.text_teaser
+    - field.field.node.blog_post.body
+    - field.field.node.blog_post.field_blog
+    - field.field.node.blog_post.field_blog_post_image
+    - field.field.node.blog_post.field_bottom_ctas
+    - field.field.node.blog_post.field_categories
+    - field.field.node.blog_post.field_related_posts
+    - field.field.node.blog_post.field_sidebar_ctas
+    - field.field.node.blog_post.field_topics
+    - node.type.blog_post
+  module:
+    - fences
+    - text
+    - user
+id: node.blog_post.text_teaser
+targetEntityType: node
+bundle: blog_post
+mode: text_teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings:
+      fences:
+        fences_field_tag: none
+        fences_field_classes: ''
+        fences_field_item_tag: none
+        fences_field_item_classes: ''
+        fences_label_tag: none
+        fences_label_classes: ''
+hidden:
+  field_blog: true
+  field_blog_post_image: true
+  field_bottom_ctas: true
+  field_categories: true
+  field_related_posts: true
+  field_sidebar_ctas: true
+  field_topics: true
+  links: true

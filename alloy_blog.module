@@ -111,7 +111,22 @@ function alloy_blog_preprocess_node(&$variables) {
       }
     }
   }
+}
 
+function alloy_blog_preprocess_page(&$variables) {
+  $route = \Drupal::routeMatch();
+  $node = $route->getParameter('node');
+
+  // Add blog post categories above the page title when displaying a blog
+  // post node
+  if ($node && $node->getType() == 'blog_post') {
+    $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('node');
+    $output = $viewBuilder->viewField($node->field_categories, 'full');
+    $output['#cache']['tags'] = $node->getCacheTags();
+    $variables['page']['header']['blog_categories']['list'] = $output;
+    $variables['page']['header']['blog_categories']['#weight'] = -10;
+    $variables['page']['header']['#sorted'] = false;
+  }
 }
 
 function alloy_blog_entity_view(&$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
@@ -159,7 +174,6 @@ function alloy_blog_entity_view(&$build, EntityInterface $entity, EntityViewDisp
     }
   }
 }
-
 
 function alloy_blog_preprocess_assembly(&$variables) {
   $assembly = $variables['elements']['#assembly'];

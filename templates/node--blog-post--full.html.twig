@@ -52,28 +52,37 @@
     </footer>
   {% endif %}
 
-  <div{{ content_attributes.addClass('content') }}>
-    {{ content|without("disqus_shortname", "disqus_page_id", "facebook_app_id") }}
+  <div class="row">
+    <div class="col-sm-8">
+      <div{{ content_attributes.addClass('content') }}>
+        {{ content|without("disqus_shortname", "disqus_page_id", "facebook_app_id", "field_bottom_ctas", "field_sidebar_ctas", "author_bio", "field_categories") }}
+      </div>
+
+      {{ content.author_bio}}
+
+      {% if content.disqus_shortname %}
+      <div class="disqus-wrapper">
+        <div id="disqus_thread"></div>
+          <script>
+            var disqus_config = function () {
+                this.page.identifier = "{{ content.disqus_page_id|raw }}"
+            };
+            (function() {
+                var d = document, s = d.createElement('script');
+
+                s.src = '//{{ content.disqus_shortname|raw }}.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-sm-4">
+      {{ content.field_sidebar_ctas }}
+    </div>
   </div>
-
-  {% if content.disqus_shortname %}
-  <div class="disqus-wrapper">
-    <div id="disqus_thread"></div>
-      <script>
-        var disqus_config = function () {
-            this.page.identifier = "{{ content.disqus_page_id|raw }}"
-        };
-        (function() {
-            var d = document, s = d.createElement('script');
-
-            s.src = '//{{ content.disqus_shortname|raw }}.disqus.com/embed.js';
-
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  </div>
-  {% endif %}
 
 </article>
