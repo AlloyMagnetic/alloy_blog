@@ -93,6 +93,7 @@ function alloy_blog_preprocess_node(&$variables) {
         if (isset($shortname[0]['value'])) {
           $variables['content']['disqus_shortname']['#markup'] = $shortname[0]['value'];
           $variables['content']['disqus_page_id']['#markup'] = 'node.blog_post.' . $node->id();
+          $variables['content']['disqus_shortname']['#cache']['tags'] = ['blog:' . $blog_id];
         }
       }
 
