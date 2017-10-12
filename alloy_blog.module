@@ -241,3 +241,14 @@ function alloy_blog_entity_update(EntityInterface $entity) {
     \Drupal::service('alloy_blog.blog_term_path_manager')->blogOrTermEdit($entity);
   }
 }
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * Use our customized argument/contextual filter to allow title replacement.
+ */
+function alloy_blog_views_data_alter(&$data) {
+  if (isset($data['node__field_blog']['field_blog_target_id']['argument']['id'])) {
+    $data['node__field_blog']['field_blog_target_id']['argument']['id'] = 'blog_id';
+  }
+}
