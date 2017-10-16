@@ -15,7 +15,10 @@ use Drupal\views\Plugin\views\argument\NumericArgument;
 class BlogId extends NumericArgument {
   public function title() {
     if ($this->argument) {
-      return Blog::load($this->argument)->label();
+      $blog = Blog::load($this->argument);
+      if ($blog) {
+        return $blog->getTitle();
+      }
     }
     return $this->argument;
   }

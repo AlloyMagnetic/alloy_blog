@@ -12,8 +12,10 @@ use Drupal\Core\Link;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\alloy_blog\Entity\Blog;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\user\UserInterface;
 use Drupal\views\Entity\View;
+use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
 /**
@@ -172,7 +174,7 @@ function alloy_blog_preprocess_assembly(&$variables) {
         'author'
       ],
     ];
-    foreach($args['fields'] as $field) {
+    foreach($args['fields'] as $index => $field) {
       foreach($assembly->get('field_filter_by_' . $field)->getValue() as $value) {
         $args['values'][$field][] = $value['target_id'];
       }
@@ -183,37 +185,46 @@ function alloy_blog_preprocess_assembly(&$variables) {
         $args['view_args'][] = 'all';
       }
     }
-    $noargs = empty(array_filter($args['view_args'], function($arg) { return $arg != 'all'; }));
 
-    $view = \Drupal\views\Views::getView('blog_feed');
-    $display = 'embed_1';
-    $variables['content']['view'] = $view->buildRenderable($display, $args['view_args']);
+    $view = \Drupal\views\Views::getView('blog');
+    $variables['content']['view'] = $view->buildRenderable('recent', $args['view_args']);
+    $variables['content']['view']['#cache']['keys'][] = serialize($args['view_args']);
     $variables['content']['view']['#weight'] = 5;
-
-    $link = Link::fromTextAndUrl('More Blog Posts', $view->getUrl(null, 'page_2'));
-    $variables['content']['more']['#weight'] = 6;
 
     // If the filter is a single blog, single term, or single blog+term, use the
     // seo friendly url aliases for the More Blog Posts link
-    $route_params = false;
+    $route_params = [];
     $blog_count = isset($args['values']['blog']) ? count($args['values']['blog']) : 0;
     $term_count = isset($args['values']['category']) ? count($args['values']['category']) : 0;
 
+    $blog = $blog_count == 1 ? Blog::load(reset($args['values']['blog'])) : FALSE;
+    $term = $term_count == 1 ? Term::load(reset($args['values']['category'])) : FALSE;
+
+    $text = "More blog posts";
+    $route = 'view.blog.global';
+
+    // filter by blog, no terms
     if ($blog_count == 1 && $term_count == 0) {
-      $route_params['blog'] = implode($args['values']['blog']);
-      $link = Link::fromTextAndUrl('More Blog Posts', Url::fromRoute('entity.blog.canonical', $route_params));
+      $route = 'entity.blog.canonical';
+      $route_params = ['blog' => implode($args['values']['blog'])];
+      $text = t('More @title blog posts', ['@title' => $blog->getTitle()]);
     }
+    // filter by terms no blog
     else if ($blog_count == 0 && $term_count == 1) {
-      $route_params['taxonomy_term'] = implode($args['values']['category']);
-      $link = Link::fromTextAndUrl('More Blog Posts', Url::fromRoute('entity.taxonomy_term.canonical', $route_params));
+      $route = 'entity.taxonomy_term.canonical';
+      $route_params = ['taxonomy_term' => implode($args['values']['category'])];
+      $text = t('More @title blog posts', ['@title' => $term->getName()]);
     }
-    else if ($blog_count == 1 && $term_count == 1) {
-      $route_params['blog'] = implode($args['values']['blog']);
-      $route_params['term'] = implode($args['values']['category']);
-      $link = Link::fromTextAndUrl('More Blog Posts', Url::fromRoute('alloy_blog.blog_term_content', $route_params));
+    // filter by both
+    if ($blog_count == 1 && $term_count == 1) {
+      $link = Link::fromTextAndUrl($text, $view->getUrl(array_values($args['view_args']), 'blog_term'));
+    }
+    else {
+      $link = Link::fromTextAndUrl($text, Url::fromRoute($route, $route_params));
     }
 
     $link->getUrl()->setOption('attributes', ['class' => ['blog--more-link']]);
+    $variables['content']['more']['#weight'] = 6;
     $variables['content']['more']['link'] = $link->toRenderable();
   }
 }
@@ -250,5 +261,17 @@ function alloy_blog_entity_update(EntityInterface $entity) {
 function alloy_blog_views_data_alter(&$data) {
   if (isset($data['node__field_blog']['field_blog_target_id']['argument']['id'])) {
     $data['node__field_blog']['field_blog_target_id']['argument']['id'] = 'blog_id';
+  }
+}
+
+/**
+ * Implements hook_views_post_render().
+ *
+ * Views contextual filter title override sets the h1 page title, but not the HTML <head> title.
+ */
+function alloy_blog_views_post_render(ViewExecutable $view) {
+  if ($view->id() == 'blog' && in_array($view->current_display, ['term', 'blog_term'])) {
+    $route = \Drupal::routeMatch()->getCurrentRouteMatch()->getRouteObject();
+    $route->setDefault('_title', $view->getTitle());
   }
 }

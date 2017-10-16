@@ -28,7 +28,7 @@ class BlogTermPathManager {
     }
 
     $full_alias = '/' . $blog_slug . $this->getTermAlias($term);
-    $alias_target = '/blog_term_content/' . $blog->id() . '/' . $term->id();
+    $alias_target = '/alloy/blog-term/' . $blog->id() . '/' . $term->id();
 
     // If there is an existing alias for this path, delete it first. Failing to
     // do so will either create duplicates or conflicts.
