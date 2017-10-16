@@ -398,10 +398,7 @@ display:
     display_title: Global
     position: 1
     display_options:
-      display_extenders:
-        metatag_display_extender:
-          metatags:
-            title: '[site:name] Blog'
+      display_extenders: {  }
       path: blog
       display_description: ''
       arguments: {  }
@@ -424,8 +421,7 @@ display:
     display_title: 'Recent blog posts'
     position: 5
     display_options:
-      display_extenders:
-        metatag_display_extender: {  }
+      display_extenders: {  }
       display_description: ''
       pager:
         type: some
