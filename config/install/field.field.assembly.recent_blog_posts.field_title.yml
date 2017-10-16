@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - assembly.assembly_type.blog_feed
+    - assembly.assembly_type.recent_blog_posts
     - field.storage.assembly.field_title
-id: assembly.blog_feed.field_title
+id: assembly.recent_blog_posts.field_title
 field_name: field_title
 entity_type: assembly
-bundle: blog_feed
+bundle: recent_blog_posts
 label: Title
-description: 'An optional title for this assembly. Useful when displaying a filtered set of blog posts.'
+description: ''
 required: false
 translatable: true
 default_value: {  }

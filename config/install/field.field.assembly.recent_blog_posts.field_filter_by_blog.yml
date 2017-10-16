@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - assembly.assembly_type.blog_feed
+    - assembly.assembly_type.recent_blog_posts
     - field.storage.assembly.field_filter_by_blog
-id: assembly.blog_feed.field_filter_by_blog
+id: assembly.recent_blog_posts.field_filter_by_blog
 field_name: field_filter_by_blog
 entity_type: assembly
-bundle: blog_feed
+bundle: recent_blog_posts
 label: 'Filter by Blog'
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

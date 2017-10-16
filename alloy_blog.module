@@ -166,7 +166,7 @@ function alloy_blog_preprocess_assembly(&$variables) {
   $assembly = $variables['elements']['#assembly'];
   $type = $assembly->bundle();
 
-  if ($type == 'blog_feed') {
+  if ($type == 'blog_feed' || $type == 'recent_blog_posts') {
     $args = [
       'fields' => [
         'blog',

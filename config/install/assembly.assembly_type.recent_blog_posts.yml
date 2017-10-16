@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: recent_blog_posts
+label: 'Recent Blog Posts'
+description: 'Shows 3 recent blog posts, optionally filtered by blog, category or author.'
+visual_styles: ''
+new_revision: true

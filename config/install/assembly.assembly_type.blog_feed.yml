@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: blog_feed
-label: 'Blog Feed'
-description: ''
-visual_styles: ''
-new_revision: true

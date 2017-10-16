@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - assembly.assembly_type.recent_blog_posts
+    - field.field.assembly.recent_blog_posts.field_filter_by_author
+    - field.field.assembly.recent_blog_posts.field_filter_by_blog
+    - field.field.assembly.recent_blog_posts.field_filter_by_category
+    - field.field.assembly.recent_blog_posts.field_title
+  module:
+    - fences
+id: assembly.recent_blog_posts.default
+targetEntityType: assembly
+bundle: recent_blog_posts
+mode: default
+content:
+  field_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings:
+      fences:
+        fences_field_tag: none
+        fences_field_classes: ''
+        fences_field_item_tag: h2
+        fences_field_item_classes: ''
+        fences_label_tag: none
+        fences_label_classes: ''
+    type: string
+    region: content
+hidden:
+  field_filter_by_author: true
+  field_filter_by_blog: true
+  field_filter_by_category: true
+  name: true
+  user_id: true

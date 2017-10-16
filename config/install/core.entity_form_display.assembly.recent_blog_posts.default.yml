@@ -2,33 +2,30 @@ langcode: en
 status: true
 dependencies:
   config:
-    - assembly.assembly_type.blog_feed
-    - field.field.assembly.blog_feed.field_filter_by_author
-    - field.field.assembly.blog_feed.field_filter_by_blog
-    - field.field.assembly.blog_feed.field_filter_by_category
-    - field.field.assembly.blog_feed.field_title
-id: assembly.blog_feed.default
+    - assembly.assembly_type.recent_blog_posts
+    - field.field.assembly.recent_blog_posts.field_filter_by_author
+    - field.field.assembly.recent_blog_posts.field_filter_by_blog
+    - field.field.assembly.recent_blog_posts.field_filter_by_category
+    - field.field.assembly.recent_blog_posts.field_title
+id: assembly.recent_blog_posts.default
 targetEntityType: assembly
-bundle: blog_feed
+bundle: recent_blog_posts
 mode: default
 content:
   field_filter_by_author:
     weight: 5
-    settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: entity_reference_autocomplete
-    region: content
-  field_filter_by_blog:
-    weight: 4
     settings: {  }
     third_party_settings: {  }
-    type: options_buttons
+    type: options_select
+    region: content
+  field_filter_by_blog:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_filter_by_category:
-    weight: 3
+    weight: 4
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
