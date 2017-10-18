@@ -2,6 +2,7 @@
 
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
 
 function alloy_blog_install() {
   // Enable pathauto for blog entities
@@ -83,3 +84,31 @@ function alloy_blog_install() {
     ->save();
 }
 
+/**
+ * Add disqus shortname field if needed.
+ */
+function alloy_blog_update_8001(&$sandbox) {
+  if (!FieldStorageConfig::loadByName('blog', 'field_disqus_shortname')) {
+    $storage = FieldStorageConfig::create([
+      'field_name' => 'field_disqus_shortname',
+      'entity_type' => 'blog',
+      'type' => 'string',
+      'cardinality' => 1,
+      'settings' => [
+        'max_length' => 255,
+        'is_ascii' => false,
+        'case_sensitive' => false,
+      ],
+    ]);
+    $storage->save();
+    $config = FieldConfig::create([
+      'field_name' => 'field_disqus_shortname',
+      'entity_type' => 'blog',
+      'bundle' => 'blog',
+      'label' => 'Disqus Shortname',
+      'description' => '',
+      'required' => false,
+    ]);
+    $config->save();
+  }
+}
