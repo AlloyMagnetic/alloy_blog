@@ -21,10 +21,11 @@ class BlogTermPathManager {
   }
 
   public function updateAlias(Term $term, Blog $blog) {
-    $blog_slug = '';
-    $slug_field_value = $blog->get('field_url_slug')->getValue();
-    if (count($slug_field_value)) {
-      $blog_slug = $slug_field_value[0]['value'];
+    $blog_slug = $blog->get('field_url_slug')->value;
+    if (!$blog_slug) {
+      $blog_slug = \Drupal::service('pathauto.alias_cleaner')->cleanString($blog->title->value);
+      $blog->field_url_slug = $blog_slug;
+      $blog->save();
     }
 
     $full_alias = '/' . $blog_slug . $this->getTermAlias($term);
