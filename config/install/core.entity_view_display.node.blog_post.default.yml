@@ -40,8 +40,8 @@ content:
       image_link: ''
     third_party_settings:
       fences:
-        fences_field_tag: none
-        fences_field_classes: ''
+        fences_field_tag: div
+        fences_field_classes: blog-image
         fences_field_item_tag: none
         fences_field_item_classes: ''
         fences_label_tag: none
@@ -105,9 +105,9 @@ content:
     third_party_settings:
       fences:
         fences_field_tag: div
-        fences_field_classes: ''
+        fences_field_classes: topics-list-wrapper
         fences_field_item_tag: ul
-        fences_field_item_classes: ''
+        fences_field_item_classes: topics-list
         fences_label_tag: h3
         fences_label_classes: ''
 hidden:
