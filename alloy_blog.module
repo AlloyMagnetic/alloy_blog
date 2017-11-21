@@ -142,7 +142,7 @@ function alloy_blog_entity_view(&$build, EntityInterface $entity, EntityViewDisp
     }
 
     $build['contact_link'] = [
-      'link' => Link::createFromRoute('Contact ' . $familiar_name, 'entity.user.contact_form', ['user' => 2], ['attributes' => ['class' => ['btn', 'btn-primary']]])->toRenderable(),
+      'link' => Link::createFromRoute('Contact ' . $familiar_name, 'entity.user.contact_form', ['user' => $entity->id()], ['attributes' => ['class' => ['btn', 'btn-primary']]])->toRenderable(),
       '#weight' => 10,
     ];
     $name = implode(' ', [$first_name, $last_name]);
