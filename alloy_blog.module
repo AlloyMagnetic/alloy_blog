@@ -50,7 +50,6 @@ function alloy_blog_theme_registry_alter(&$theme_registry) {
   $theme_registry['user']['path'] = $path . '/templates';
 }
 
-
 function alloy_blog_preprocess_node(&$variables) {
   $node = $variables['elements']['#node'];
 
@@ -141,10 +140,13 @@ function alloy_blog_entity_view(&$build, EntityInterface $entity, EntityViewDisp
       $familiar_name = $first_name;
     }
 
-    $build['contact_link'] = [
-      'link' => Link::createFromRoute('Contact ' . $familiar_name, 'entity.user.contact_form', ['user' => $entity->id()], ['attributes' => ['class' => ['btn', 'btn-primary']]])->toRenderable(),
-      '#weight' => 10,
-    ];
+    $contact = \Drupal::service('user.data')->get('contact', $entity->id(), 'enabled');
+    if ($contact) {
+      $build['contact_link'] = [
+        'link' => Link::createFromRoute('Contact ' . $familiar_name, 'entity.user.contact_form', ['user' => $entity->id()], ['attributes' => ['class' => ['btn', 'btn-primary']]])->toRenderable(),
+        '#weight' => 10,
+      ];
+    }
     $name = implode(' ', [$first_name, $last_name]);
     $build['full_name'] = [
       '#markup' => $name,
