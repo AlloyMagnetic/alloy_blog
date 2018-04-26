@@ -4,6 +4,8 @@ dependencies:
   config:
     - assembly.assembly_type.hubspot_cta_embed
     - assembly.assembly_type.hubspot_form_embed
+    - assembly.assembly_type.rich_text
+    - assembly.assembly_type.webform
     - field.storage.node.field_bottom_ctas
     - node.type.blog_post
   module:
@@ -24,6 +26,8 @@ settings:
     target_bundles:
       hubspot_cta_embed: hubspot_cta_embed
       hubspot_form_embed: hubspot_form_embed
+      rich_text: rich_text
+      webform: webform
     sort:
       field: _none
     auto_create: false
