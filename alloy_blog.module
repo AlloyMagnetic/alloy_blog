@@ -17,6 +17,7 @@ use Drupal\user\UserInterface;
 use Drupal\views\Entity\View;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Implements hook_help().
@@ -303,4 +304,44 @@ function alloy_blog_views_post_render(ViewExecutable $view) {
     $route = \Drupal::routeMatch()->getCurrentRouteMatch()->getRouteObject();
     $route->setDefault('_title', $view->getTitle());
   }
+}
+
+/**
+ * Implements hook_page_attachments().
+ *
+ * Load all meta tags for this page.
+ */
+function alloy_blog_page_attachments(array &$attachments) {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (!($node instanceof \Drupal\node\NodeInterface) || $node->getType() != 'blog_post') {
+    // You can get nid and anything else you need from the node object.
+    return;
+  }
+
+  try {
+    $datalayer = [
+      'blog' => $node->get('field_blog')->entity->label(),
+    ];
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('alloy_blog')->error('Exception adding alloy blog datalayer: ' . $e->getMessage());
+    return;
+  }
+
+  if (empty($attachments['#attached'])) {
+    $attachments['#attached'] = [];
+  }
+  if (empty($attachments['#attached']['html_head'])) {
+    $attachments['#attached']['html_head'] = [];
+  }
+
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'script',
+      '#value' => 'window.dataLayer = window.dataLayer || []; window.dataLayer.push(' . Json::encode($datalayer) . ');',
+    ],
+    'alloy_blog_datalayer'
+  ];
+
 }
