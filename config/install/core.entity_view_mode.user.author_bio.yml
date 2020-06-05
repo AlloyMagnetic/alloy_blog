@@ -1,0 +1,12 @@
+uuid: 9f979105-323b-4335-ac2f-d72b8f41279d
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: 1xUecWvlotHvv3EEpZcXpKAF6f2L_PrN0vd933E67EY
+id: user.author_bio
+label: 'Author Bio'
+targetEntityType: user
+cache: true
