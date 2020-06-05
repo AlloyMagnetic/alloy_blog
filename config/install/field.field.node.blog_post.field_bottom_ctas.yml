@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - assembly.assembly_type.call_to_action
     - assembly.assembly_type.hubspot_cta_embed
     - assembly.assembly_type.hubspot_form_embed
     - assembly.assembly_type.rich_text
@@ -24,6 +25,7 @@ settings:
   handler: 'default:assembly'
   handler_settings:
     target_bundles:
+      call_to_action: call_to_action
       hubspot_cta_embed: hubspot_cta_embed
       hubspot_form_embed: hubspot_form_embed
       rich_text: rich_text

@@ -4,5 +4,6 @@ dependencies: {  }
 id: recent_blog_posts
 label: 'Recent Blog Posts'
 description: 'Shows 3 recent blog posts, optionally filtered by blog, category or author.'
-visual_styles: ''
+icon: null
+visual_styles: "vs-no-space-before|No Space Before|Eliminates space before assembly\r\nvs-no-space-after|No Space After|Eliminates space after assembly\r\nvs-border-top|Top Border|Adds a border to the top of the assembly\r\nvs-border-bottom|Bottom Border|Adds a border to the bottom of the assembly\r\nvs-bg-primary|Primary Background|Adds a background color to the assembly\r\nvs-bg-primary-compact|Primary Background Compact|Adds a background color to the assembly but no additional padding\r\nvs-bg-secondary|Secondary Background|Adds a background color to the assembly\r\nvs-bg-secondary-compact|Secondary Background Compact|Adds a background color to the assembly but no additional padding\r\nvs-bg-tertiary|Tertiary Background|Adds a background color to the assembly\r\nvs-bg-tertiary-compact|Tertiary Background Compact|Adds a background color to the assembly but no additional padding\r\nvs-make-narrow|Make narrow|Make the container narrow\r\n"
 new_revision: true

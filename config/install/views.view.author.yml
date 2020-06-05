@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.user.compact
+    - core.entity_view_mode.user.author_bio
   module:
     - node
     - user
@@ -13,7 +13,6 @@ description: ''
 tag: ''
 base_table: users_field_data
 base_field: uid
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -22,9 +21,8 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
-        options:
-          perm: 'access user profiles'
+        type: none
+        options: {  }
       cache:
         type: tag
         options: {  }
@@ -120,6 +118,8 @@ display:
           id: status
           expose:
             operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
           group: 1
       sorts: {  }
       title: Author
@@ -182,7 +182,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - user.permissions
       tags: {  }
   bio_block:
     display_plugin: block
@@ -198,5 +197,4 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - user.permissions
       tags: {  }

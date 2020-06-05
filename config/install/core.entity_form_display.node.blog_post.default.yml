@@ -7,7 +7,9 @@ dependencies:
     - field.field.node.blog_post.field_blog_post_image
     - field.field.node.blog_post.field_bottom_ctas
     - field.field.node.blog_post.field_categories
+    - field.field.node.blog_post.field_metatags
     - field.field.node.blog_post.field_related_posts
+    - field.field.node.blog_post.field_sections
     - field.field.node.blog_post.field_sidebar_ctas
     - field.field.node.blog_post.field_topics
     - image.style.thumbnail
@@ -16,6 +18,7 @@ dependencies:
     - entity_reference_revisions
     - image
     - inline_entity_form
+    - metatag
     - path
     - text
 id: node.blog_post.default
@@ -31,10 +34,11 @@ content:
       rows: 9
       summary_rows: 3
       placeholder: ''
+      show_summary: false
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -66,6 +70,7 @@ content:
       match_operator: CONTAINS
       override_labels: false
       collapsed: false
+      allow_duplicate: false
     third_party_settings: {  }
   field_categories:
     type: options_buttons
@@ -73,15 +78,39 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_metatags:
+    weight: 26
+    settings:
+      sidebar: true
+    third_party_settings: {  }
+    type: metatag_firehose
+    region: content
   field_related_posts:
     type: entity_reference_revisions_autocomplete
-    weight: 6
+    weight: 9
     region: content
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
+  field_sections:
+    weight: 6
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: true
+      match_operator: CONTAINS
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_duplicate: false
+    third_party_settings: {  }
+    type: inline_entity_form_complex
+    region: content
   field_sidebar_ctas:
     type: inline_entity_form_complex
     weight: 8
@@ -96,6 +125,7 @@ content:
       match_operator: CONTAINS
       override_labels: false
       collapsed: false
+      allow_duplicate: false
     third_party_settings: {  }
   field_topics:
     type: entity_reference_autocomplete_tags
@@ -105,12 +135,20 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
   path:
     type: path
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 14
+    region: content
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -122,12 +160,18 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 10
+    weight: 11
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     region: content
+    third_party_settings: {  }
+  url_redirects:
+    weight: 13
+    region: content
+    settings: {  }
     third_party_settings: {  }
 hidden:
   promote: true
