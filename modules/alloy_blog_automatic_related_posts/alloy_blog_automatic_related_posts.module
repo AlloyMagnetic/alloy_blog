@@ -1,0 +1,55 @@
+<?php
+
+function alloy_blog_automatic_related_posts_preprocess_node(&$variables) {
+  $node = $variables['elements']['#node'];
+
+  $type = $node->getType();
+  $id = $node->get('nid')->value;
+  $view_mode = $variables['view_mode'];
+
+  if ($type == 'blog_post') {
+    if ($view_mode == 'full') {
+      
+      // If no related blog posts are chosen, show 2 most recent published posts that share blog+category
+      if (count($node->get('field_related_posts')->getValue()) === 0) {
+        
+        // Get current blog and category ids
+        $current_blog = $node->get('field_blog')->getValue();
+        $current_cats = $node->get('field_categories')->getValue();
+        $current_blog_id = reset($current_blog)['target_id'];
+        $current_cat_ids = [];
+        foreach ($current_cats as $current_cat) {
+          $current_cat_ids[] = $current_cat['target_id'];
+        }
+
+        if ($current_blog_id && $current_cat_ids) {
+          
+          // Find nodes
+          $query = \Drupal::entityQuery('node')
+          ->condition('status', 1)
+          ->condition('field_blog', $current_blog_id)
+          ->condition('field_categories', $current_cat_ids, 'in')
+          ->condition('nid', $node->id(), '!=')
+          ->sort('created', 'DESC')
+          ->range(0, 2);
+          $result = $query->execute();
+          
+          // Add the node text teasers to the output
+          $view_builder = \Drupal::entityTypeManager()->getViewBuilder('node');
+          $storage = \Drupal::entityTypeManager()->getStorage('node');
+          foreach ($result as $key => $rnid) {
+            $variables['content']['field_related_posts'][] = $view_builder->view($storage->load($rnid), 'text_teaser');
+          }
+          
+          // Fake the title as if this was the field
+          if (count($result)) {
+            $variables['content']['field_related_posts']['title'] = [
+              '#markup' => '<h3 class="field__label">Related Posts</h3>',
+              '#weight' => -10
+            ];
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+name: Alloy Blog Automatic Related Posts
+description: 'Provides category-based related posts when none are provided manually.'
+type: module
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - alloy_blog:alloy_blog
