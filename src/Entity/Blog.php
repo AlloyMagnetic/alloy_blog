@@ -50,6 +50,11 @@ use Drupal\user\UserInterface;
  *     "langcode" = "langcode",
  *     "status" = "status",
  *   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_user",
+ *     "revision_created" = "revision_created",
+ *     "revision_log_message" = "revision_log",
+ *   },
  *   links = {
  *     "canonical" = "/blog/{blog}",
  *     "add-form" = "/admin/structure/blog/add",
