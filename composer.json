@@ -3,7 +3,7 @@
   "type": "drupal-module",
   "description": "Starter pack for a full featured blog in Drupal",
   "keywords": ["Drupal"],
-  "license": "Proprietary",
+  "license": "proprietary",
   "homepage": "https://code.kilpho.st/alloy/alloy-blog",
   "minimum-stability": "dev",
   "support": {
