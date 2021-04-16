@@ -86,7 +86,7 @@ class BlogTermPathManager {
 
   // Gets the current alias for the given term
   private function getTermAlias(Term $term) {
-    $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/taxonomy/term/' . $term->id());
+    $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/' . $term->id());
     return $alias;
   }
 
