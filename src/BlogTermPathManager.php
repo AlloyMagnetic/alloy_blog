@@ -31,17 +31,19 @@ class BlogTermPathManager {
     $delete_conditions = [
       'alias' => $full_alias
     ];
-    \Drupal::service('path.alias_storage')->delete($delete_conditions);
+    $existing_aliases = \Drupal::entityTypeManager()->getStorage('path_alias')->loadByProperties($delete_conditions);
+    \Drupal::entityTypeManager()->getStorage('path_alias')->delete($existing_aliases);
 
     // If there is an existing path for this alias, delete it first. Failing to
     // do so will either create duplicates or conflicts.
     $delete_conditions = [
-      'source' => $alias_target,
+      'path' => $alias_target,
     ];
-    \Drupal::service('path.alias_storage')->delete($delete_conditions);
+    $existing_aliases = \Drupal::entityTypeManager()->getStorage('path_alias')->loadByProperties($delete_conditions);
+    \Drupal::entityTypeManager()->getStorage('path_alias')->delete($existing_aliases);
 
     try {
-      \Drupal::service('path.alias_storage')->save($alias_target, $full_alias);
+      \Drupal::entityTypeManager()->getStorage('path_alias')->save($term, $full_alias);
       $message = 'Alias created: ' . $full_alias . ' > ' . $alias_target;
       if (function_exists('drush_print_r')) {
         drush_print_r($message);
@@ -62,7 +64,7 @@ class BlogTermPathManager {
   // Create aliases for a single term. An idempotent function that creates
   // aliases for all blogs
   public function updateTermAliases(Term $term) {
-    foreach (entity_load_multiple('blog') as $blog) {
+    foreach ($this->entity_load_multiple('blog') as $blog) {
       $this->updateAlias($term, $blog);
     }
   }
@@ -70,15 +72,15 @@ class BlogTermPathManager {
   // Create aliases for a single blog. An idempotent function that creates
   // aliases for all terms
   public function updateBlogAliases(Blog $blog) {
-    foreach(entity_load_multiple('taxonomy_term') as $term) {
+    foreach($this->entity_load_multiple('taxonomy_term') as $term) {
       $this->updateAlias($term, $blog);
     }
   }
 
   // Create aliases for all terms
   public function updateAllAliases() {
-    foreach(entity_load_multiple('taxonomy_term') as $term) {
-      foreach (entity_load_multiple('blog') as $blog) {
+    foreach($this->entity_load_multiple('taxonomy_term') as $term) {
+      foreach ($this->entity_load_multiple('blog') as $blog) {
         $this->updateAlias($term, $blog);
       }
     }
@@ -88,6 +90,17 @@ class BlogTermPathManager {
   private function getTermAlias(Term $term) {
     $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/taxonomy/term/' . $term->id());
     return $alias;
+  }
+
+  function entity_load_multiple($entity_type, array $ids = NULL, $reset = FALSE) {
+    $controller = \Drupal::entityTypeManager()
+      ->getStorage($entity_type);
+    if ($reset) {
+      $controller
+        ->resetCache($ids);
+    }
+    return $controller
+      ->loadMultiple($ids);
   }
 
 }
