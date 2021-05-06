@@ -107,7 +107,7 @@ class BlogRevisionDeleteForm extends ConfirmFormBase {
     $this->BlogStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Blog: deleted %title revision %revision.', ['%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    drupal_set_message(t('Revision from %revision-date of Blog %title has been deleted.', ['%revision-date' => format_date($this->revision->getRevisionCreationTime()), '%title' => $this->revision->label()]));
+    $this->messenger()->addStatus(t('Revision from %revision-date of Blog %title has been deleted.', ['%revision-date' => format_date($this->revision->getRevisionCreationTime()), '%title' => $this->revision->label()]));
     $form_state->setRedirect(
       'entity.blog.canonical',
        ['blog' => $this->revision->id()]

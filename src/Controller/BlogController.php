@@ -27,8 +27,8 @@ class BlogController extends ControllerBase implements ContainerInjectionInterfa
    *   An array suitable for drupal_render().
    */
   public function revisionShow($blog_revision) {
-    $blog = $this->entityManager()->getStorage('blog')->loadRevision($blog_revision);
-    $view_builder = $this->entityManager()->getViewBuilder('blog');
+    $blog = \Drupal::service('entity_field.manager')->getStorage('blog')->loadRevision($blog_revision);
+    $view_builder = \Drupal::service('entity_field.manager')->getViewBuilder('blog');
 
     return $view_builder->view($blog);
   }
@@ -43,7 +43,7 @@ class BlogController extends ControllerBase implements ContainerInjectionInterfa
    *   The page title.
    */
   public function revisionPageTitle($blog_revision) {
-    $blog = $this->entityManager()->getStorage('blog')->loadRevision($blog_revision);
+    $blog = \Drupal::service('entity_field.manager')->getStorage('blog')->loadRevision($blog_revision);
     return $this->t('Revision of %title from %date', ['%title' => $blog->label(), '%date' => format_date($blog->getRevisionCreationTime())]);
   }
 
@@ -62,7 +62,7 @@ class BlogController extends ControllerBase implements ContainerInjectionInterfa
     $langname = $blog->language()->getName();
     $languages = $blog->getTranslationLanguages();
     $has_translations = (count($languages) > 1);
-    $blog_storage = $this->entityManager()->getStorage('blog');
+    $blog_storage = \Drupal::service('entity_field.manager')->getStorage('blog');
 
     $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $blog->label()]) : $this->t('Revisions for %title', ['%title' => $blog->label()]);
     $header = [$this->t('Revision'), $this->t('Operations')];
