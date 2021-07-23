@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - assembly.assembly_type.hubspot_cta_embed
     - assembly.assembly_type.hubspot_form_embed
     - assembly.assembly_type.rich_text
     - assembly.assembly_type.webform
@@ -24,12 +23,10 @@ settings:
   handler: 'default:assembly'
   handler_settings:
     target_bundles:
-      hubspot_cta_embed: hubspot_cta_embed
       hubspot_form_embed: hubspot_form_embed
       rich_text: rich_text
       webform: webform
     sort:
       field: _none
     auto_create: false
-    auto_create_bundle: hubspot_cta_embed
 field_type: entity_reference_revisions

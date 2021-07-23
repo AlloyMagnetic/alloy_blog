@@ -3,13 +3,7 @@ status: true
 dependencies:
   config:
     - assembly.assembly_type.call_to_action
-    - assembly.assembly_type.columns
-    - assembly.assembly_type.content_with_aside
-    - assembly.assembly_type.logos
-    - assembly.assembly_type.photo_gallery
     - assembly.assembly_type.rich_text
-    - assembly.assembly_type.tiles
-    - assembly.assembly_type.tiles_with_content
     - field.storage.node.field_sections
     - node.type.blog_post
   module:
@@ -29,13 +23,7 @@ settings:
   handler_settings:
     target_bundles:
       call_to_action: call_to_action
-      columns: columns
-      content_with_aside: content_with_aside
-      logos: logos
-      photo_gallery: photo_gallery
       rich_text: rich_text
-      tiles: tiles
-      tiles_with_content: tiles_with_content
     sort:
       field: _none
     auto_create: false

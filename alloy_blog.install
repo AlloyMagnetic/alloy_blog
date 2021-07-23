@@ -3,6 +3,7 @@
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 
 function alloy_blog_install() {
   // Enable pathauto for blog entities
@@ -12,7 +13,7 @@ function alloy_blog_install() {
   $config->set('enabled_entity_types', $enabled_pathauto_types)->save();
 
   // Assign widget settings for user fields.
-  entity_get_form_display('user', 'user', 'default')
+  EntityDisplayRepositoryInterface::getFormDisplay('user', 'user', 'default')
     ->setComponent('field_bio', [
       'type' => 'text_textarea_with_summary',
       'weight' => 13,
