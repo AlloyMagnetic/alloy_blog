@@ -4,4 +4,4 @@ categories:
     js/categories.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once

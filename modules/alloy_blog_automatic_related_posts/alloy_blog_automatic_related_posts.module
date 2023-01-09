@@ -26,6 +26,7 @@ function alloy_blog_automatic_related_posts_preprocess_node(&$variables) {
           
           // Find nodes
           $query = \Drupal::entityQuery('node')
+          ->accessCheck(true)
           ->condition('status', 1)
           ->condition('field_blog', $current_blog_id)
           ->condition('field_categories', $current_cat_ids, 'in')

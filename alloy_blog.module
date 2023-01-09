@@ -46,7 +46,7 @@ function alloy_blog_theme($existing, $type, $theme, $path) {
 }
 
 function alloy_blog_theme_registry_alter(&$theme_registry) {
-  $path = drupal_get_path('module', 'alloy_blog');
+  $path = \Drupal::service('module_handler')->getModule('alloy_blog')->getPath();
   $theme_registry['user']['theme_path'] = $path;
   $theme_registry['user']['path'] = $path . '/templates';
 }
