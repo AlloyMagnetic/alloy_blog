@@ -5,7 +5,8 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
 
-function alloy_blog_install() {
+function alloy_blog_install()
+{
   // Enable pathauto for blog entities
   $config = \Drupal::service('config.factory')->getEditable('pathauto.settings');
   $enabled_pathauto_types = $config->get('enabled_entity_types');
@@ -13,7 +14,7 @@ function alloy_blog_install() {
   $config->set('enabled_entity_types', $enabled_pathauto_types)->save();
 
   // Assign widget settings for user fields.
-  EntityDisplayRepositoryInterface::getFormDisplay('user', 'user', 'default')
+  \Drupal::service('entity_display.repository')->getFormDisplay('user', 'user', 'default')
     ->setComponent('field_bio', [
       'type' => 'text_textarea_with_summary',
       'weight' => 13,
@@ -88,7 +89,8 @@ function alloy_blog_install() {
 /**
  * Add disqus shortname field if needed.
  */
-function alloy_blog_update_8001(&$sandbox) {
+function alloy_blog_update_8001(&$sandbox)
+{
   if (!FieldStorageConfig::loadByName('blog', 'field_disqus_shortname')) {
     $storage = FieldStorageConfig::create([
       'field_name' => 'field_disqus_shortname',
