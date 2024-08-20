@@ -2,9 +2,10 @@
 
 namespace Drupal\alloy_blog;
 
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\alloy_blog\Entity\Blog;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\alloy_blog\Entity\Blog;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Language\LanguageInterface;
 
 class BlogTermPathManager {
 
@@ -21,6 +22,7 @@ class BlogTermPathManager {
   }
 
   public function updateAlias(Term $term, Blog $blog) {
+    $langcode = LanguageInterface::LANGCODE_NOT_SPECIFIED;
     $blog_slug = $blog->get('field_url_slug')->value;
 
     $full_alias = '/' . $blog_slug . $this->getTermAlias($term);
@@ -43,7 +45,13 @@ class BlogTermPathManager {
     \Drupal::entityTypeManager()->getStorage('path_alias')->delete($existing_aliases);
 
     try {
-      \Drupal::entityTypeManager()->getStorage('path_alias')->save($term, $full_alias);
+      $path_alias_storage = \Drupal::entityTypeManager()->getStorage('path_alias');
+      $path_alias = $path_alias_storage->create([
+        'path' => $alias_target,
+        'langcode' => $langcode,
+      ]);
+      $path_alias->setAlias($full_alias);
+      $path_alias->save();
       $message = 'Alias created: ' . $full_alias . ' > ' . $alias_target;
       if (function_exists('drush_print_r')) {
         drush_print_r($message);
