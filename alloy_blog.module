@@ -236,7 +236,7 @@ function alloy_blog_preprocess_assembly(&$variables) {
 function alloy_blog_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if (in_array($form_id, ['node_blog_post_edit_form', 'node_blog_post_form'])) {
     // Don't show the blog field if there is only one blog
-    $ids = \Drupal::entityQuery('blog')->execute();
+    $ids = \Drupal::entityQuery('blog')->accessCheck(true)->execute();
     if (is_array($ids) && count($ids) == 1) {
       $blog = Blog::load(reset($ids));
       $form['field_blog']['widget']['#default_value'] = [$blog->id() => $blog->id()];
@@ -244,7 +244,7 @@ function alloy_blog_form_alter(&$form, FormStateInterface $form_state, $form_id)
     }
     else {
       $categories = [];
-      foreach (Blog::loadMultiple(\Drupal::entityQuery('blog')->execute()) as $blog) {
+      foreach (Blog::loadMultiple(\Drupal::entityQuery('blog')->accessCheck(true)->execute()) as $blog) {
         if (!$blog->hasField('field_categories')) {
           break;
         }
