@@ -7,58 +7,49 @@ dependencies:
     - field.field.assembly.recent_blog_posts.field_filter_by_blog
     - field.field.assembly.recent_blog_posts.field_filter_by_category
     - field.field.assembly.recent_blog_posts.field_title
+  module:
+    - assembly
 id: assembly.recent_blog_posts.default
 targetEntityType: assembly
 bundle: recent_blog_posts
 mode: default
 content:
   field_filter_by_author:
-    weight: 5
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_filter_by_blog:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
-  field_filter_by_category:
-    weight: 4
-    settings: {  }
-    third_party_settings: {  }
-    type: options_buttons
-    region: content
-  field_title:
     weight: 2
     settings:
+      match_operator: CONTAINS
+      match_limit: 10
       size: 60
-      placeholder: ''
+      placeholder: 'Start typing to search for authors...'
     third_party_settings: {  }
-    type: string_textfield
+    type: entity_reference_autocomplete
     region: content
-  name:
-    type: string_textfield
+  field_filter_by_blog:
     weight: 0
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Start typing to search for blogs...'
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
+  field_filter_by_category:
+    weight: 1
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Start typing to search for categories...'
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_title:
+    weight: 3
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  status:
-    type: boolean_checkbox
-    weight: 6
+    type: string_textfield
     region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  visual_styles:
-    type: options_select
-    multiple: true
-    weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-hidden:
-  user_id: true
+hidden: {  }
