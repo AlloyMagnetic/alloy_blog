@@ -115,3 +115,178 @@ function alloy_blog_update_8001(&$sandbox)
     $config->save();
   }
 }
+
+/**
+ * Implements hook_uninstall().
+ * 
+ * Clean up all configurations and content created by alloy_blog.
+ */
+function alloy_blog_uninstall() {
+  $config_factory = \Drupal::configFactory();
+  $entity_type_manager = \Drupal::entityTypeManager();
+
+  // List of all configurations installed by alloy_blog
+  $alloy_blog_configs = [
+    // Assembly configurations
+    'assembly.assembly_type.recent_blog_posts',
+    'core.entity_form_display.assembly.recent_blog_posts.default',
+    'core.entity_view_display.assembly.recent_blog_posts.default',
+    'field.field.assembly.recent_blog_posts.field_filter_by_author',
+    'field.field.assembly.recent_blog_posts.field_filter_by_blog',
+    'field.field.assembly.recent_blog_posts.field_filter_by_category',
+    'field.field.assembly.recent_blog_posts.field_title',
+    'field.storage.assembly.field_filter_by_author',
+    'field.storage.assembly.field_filter_by_blog',
+    'field.storage.assembly.field_filter_by_category',
+
+    // Blog entity configurations
+    'core.entity_form_display.blog.blog.default',
+    'core.entity_view_display.blog.blog.default',
+    'field.field.blog.blog.field_disqus_shortname',
+    'field.field.blog.blog.field_url_slug',
+    'field.storage.blog.field_disqus_shortname',
+    'field.storage.blog.field_url_slug',
+
+    // Node blog_post configurations
+    'core.entity_form_display.node.blog_post.default',
+    'core.entity_view_display.node.blog_post.default',
+    'core.entity_view_display.node.blog_post.teaser',
+    'core.entity_view_display.node.blog_post.text_teaser',
+    'core.entity_view_mode.node.text_teaser',
+    'field.field.node.blog_post.body',
+    'field.field.node.blog_post.field_blog',
+    'field.field.node.blog_post.field_blog_post_image',
+    'field.field.node.blog_post.field_bottom_ctas',
+    'field.field.node.blog_post.field_categories',
+    'field.field.node.blog_post.field_metatags',
+    'field.field.node.blog_post.field_related_posts',
+    'field.field.node.blog_post.field_sections',
+    'field.field.node.blog_post.field_sidebar_ctas',
+    'field.field.node.blog_post.field_topics',
+    'field.storage.node.field_blog',
+    'field.storage.node.field_blog_post_image',
+    'field.storage.node.field_bottom_ctas',
+    'field.storage.node.field_categories',
+    'field.storage.node.field_related_posts',
+    'field.storage.node.field_sidebar_ctas',
+    'field.storage.node.field_topics',
+    'node.type.blog_post',
+
+    // User field configurations
+    'core.entity_view_mode.user.author_bio',
+    'field.field.user.user.field_bio',
+    'field.field.user.user.field_facebook',
+    'field.field.user.user.field_job_title',
+    'field.field.user.user.field_linkedin',
+    'field.field.user.user.field_twitter_handle',
+    'field.field.user.user.user_picture',
+    'field.storage.user.field_bio',
+    'field.storage.user.field_facebook',
+    'field.storage.user.field_job_title',
+    'field.storage.user.field_linkedin',
+    'field.storage.user.field_twitter_handle',
+    'field.storage.user.user_picture',
+
+    // Image styles
+    'image.style.blog_page',
+    'image.style.blog_teaser',
+
+    // Pathauto patterns
+    'pathauto.pattern.blog',
+    'pathauto.pattern.blog_post',
+    'pathauto.pattern.taxonomy_terms',
+
+    // Taxonomy
+    'taxonomy.vocabulary.categories',
+
+    // Views
+    'views.view.author',
+    'views.view.blog',
+    'views.view.categories',
+
+    // Module settings
+    'alloy_blog.settings',
+  ];
+
+  // Remove field configs first (they depend on field storage)
+  $field_configs = array_filter($alloy_blog_configs, function ($config) {
+    return strpos($config, 'field.field.') === 0;
+  });
+
+  foreach ($field_configs as $config_name) {
+    try {
+      $config = $config_factory->getEditable($config_name);
+      if (!$config->isNew()) {
+        $config->delete();
+        \Drupal::logger('alloy_blog')->info('Removed field config: @config', ['@config' => $config_name]);
+      }
+    } catch (Exception $e) {
+      \Drupal::logger('alloy_blog')->error('Error removing @config: @error', [
+        '@config' => $config_name,
+        '@error' => $e->getMessage()
+      ]);
+    }
+  }
+
+  // Remove field storage configs
+  $field_storage_configs = array_filter($alloy_blog_configs, function ($config) {
+    return strpos($config, 'field.storage.') === 0;
+  });
+
+  foreach ($field_storage_configs as $config_name) {
+    try {
+      $config = $config_factory->getEditable($config_name);
+      if (!$config->isNew()) {
+        $config->delete();
+        \Drupal::logger('alloy_blog')->info('Removed field storage config: @config', ['@config' => $config_name]);
+      }
+    } catch (Exception $e) {
+      \Drupal::logger('alloy_blog')->error('Error removing @config: @error', [
+        '@config' => $config_name,
+        '@error' => $e->getMessage()
+      ]);
+    }
+  }
+
+  // Remove all other configurations
+  $other_configs = array_filter($alloy_blog_configs, function ($config) {
+    return strpos($config, 'field.field.') !== 0 && strpos($config, 'field.storage.') !== 0;
+  });
+
+  foreach ($other_configs as $config_name) {
+    try {
+      $config = $config_factory->getEditable($config_name);
+      if (!$config->isNew()) {
+        $config->delete();
+        \Drupal::logger('alloy_blog')->info('Removed config: @config', ['@config' => $config_name]);
+      }
+    } catch (Exception $e) {
+      \Drupal::logger('alloy_blog')->error('Error removing @config: @error', [
+        '@config' => $config_name,
+        '@error' => $e->getMessage()
+      ]);
+    }
+  }
+
+  // Remove any blog_post content
+  try {
+    $node_storage = $entity_type_manager->getStorage('node');
+    $blog_post_nodes = $node_storage->loadByProperties(['type' => 'blog_post']);
+    if (!empty($blog_post_nodes)) {
+      $node_storage->delete($blog_post_nodes);
+      \Drupal::logger('alloy_blog')->info('Removed @count blog_post nodes', ['@count' => count($blog_post_nodes)]);
+    }
+  } catch (Exception $e) {
+    \Drupal::logger('alloy_blog')->error('Error removing blog_post nodes: @error', ['@error' => $e->getMessage()]);
+  }
+
+  // Clean up pathauto settings
+  $pathauto_config = $config_factory->getEditable('pathauto.settings');
+  $enabled_types = $pathauto_config->get('enabled_entity_types') ?: [];
+  $enabled_types = array_filter($enabled_types, function ($type) {
+    return $type !== 'blog';
+  });
+  $pathauto_config->set('enabled_entity_types', array_values($enabled_types))->save();
+
+  \Drupal::logger('alloy_blog')->info('alloy_blog module uninstalled and all configurations removed.');
+}
